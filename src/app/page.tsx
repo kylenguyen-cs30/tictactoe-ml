@@ -5,6 +5,10 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className=''>
           <h1>This is the title of the application </h1>
+
+          <h2>This is the subtitle</h2>
+
+          <p>i am using Tailwind css</p>
       </div>
     </main>
   )
