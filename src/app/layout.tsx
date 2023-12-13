@@ -1,5 +1,8 @@
+// importint a type definition for 'Metadata' from 'next'
 import type { Metadata } from 'next'
+// import a font named 'Inter' from Google fonts through Next.js
 import { Inter } from 'next/font/google'
+// importing a blobal css file
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
