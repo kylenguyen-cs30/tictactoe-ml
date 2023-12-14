@@ -18,10 +18,24 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  background-color: rgb(253, 247, 228);
+}
+
+/*
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
+*/
+
+
+
+/* 
+globals.css
+
+    - Purpose: This is a global CSS stylesheet where you define styles that are common across your entire application.
+    - Content: It includes Tailwind CSS directives for base styles, components, and utilities, which enable the use of Tailwind's utility classes throughout your app. Additionally, it contains custom CSS, such as variables for color schemes and styles for the body element.
+    - Scope: The styles defined here are global, meaning they will be applied to all elements of your application unless overridden by more specific styles.    
+*/

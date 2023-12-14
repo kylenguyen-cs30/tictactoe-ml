@@ -23,3 +23,12 @@ export default function RootLayout({
     </html>
   )
 }
+
+/*
+Purpose: This file defines a layout component, RootLayout, which is a React component used to wrap around other components or pages in your application.
+Content:
+    It imports the type Metadata from Next.js, likely used for defining page metadata.
+    It imports and uses the Google font 'Inter' and includes the global CSS file (globals.css).
+    The RootLayout component itself takes children as a prop and renders them within a basic HTML structure.
+Usage: This layout can be applied to any page in your app to ensure a consistent look and feel. It also applies the 'Inter' font class to the body of the pages where it's used.
+*/
