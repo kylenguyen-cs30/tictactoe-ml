@@ -29,7 +29,7 @@ export default function Home() {
           className="text-4xl front-bold items-center"
           style={{ color: 'rgb(187, 171, 140)' }}
         >
-          Welcome to Tic Tac Toe{" "}
+          Tic Tac Toe{" "}
         </h1>
 
         <h2
