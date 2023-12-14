@@ -25,90 +25,46 @@ export default function Home() {
 
         <div className="grid grid-cols-3 gap-4 flex flex-col py-10 items-center">
           <div>
-            <button 
-            className="hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              01
-            </button>
+            <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              02
-            </button>
+            <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              03
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              04
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              05
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              06
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              07
-            </button>
-          </div>
-
-          {/* Button to start a new game */}
-          <div>
-            {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold text-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              08
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
           <div>
             {" "}
-            <button 
-            className=" hover:bg-blue-500 text-white font-bold ext-lg py-6 px-6 rounded"
-            style={{backgroundColor: 'rgb(96, 114, 116)'}}
-            >
-              09
-            </button>
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
+          </div>
+          <div>
+            {" "}
+           <button className="bg-customColor hover:bg-blue-500 text-white font-bold text-lg py-12 px-12 rounded"></button>
           </div>
         </div>
 
+
+        {/* Button to start a new game */}
+
         <div className="flex min-h-fit flex-col py-10">
-          <button className="bg-pink-500 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-startBtnColor hover:bg-blue-500 text-white font-bold py-2 px-4 rounded">
             Start a new game
           </button>
         </div>
