@@ -21,10 +21,6 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 ">
       <div className="py-20 flex flex-col p-10 items-center justify-between">
-        
-
-
-
         <h1
           className="text-4xl front-bold items-center"
           style={{ color: 'rgb(187, 171, 140)' }}
