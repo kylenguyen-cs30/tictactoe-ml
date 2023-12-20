@@ -71,6 +71,42 @@ export function makeMove(state: GameState, position: number): GameState {
 }
 
 export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
+  const winner = calculateWinner(board);
+  if(winner){
+    return winner;
+  }else if(isBoardFull(board)){
+    return 'Draw';
+  }else{
+    return null;
+  }
+}
+
+
+
+export function nextPlayer(currentPlayer: Player): Player {
+  return currentPlayer === Player.X ? Player.O : Player.X;
+  /*
+    if (currentPlayer === Player.X) {
+      return Player.O
+    }else{
+      return Player.X
+    }
+  */
+}
+
+export function resetGame(): GameState {
+  // return{
+  //   board: Array(9).fill(null), // reset the board all empty cells
+  //   currentPlayer: Player.X,    // reset the starting player to Player.X
+  //   scores:{
+  //     [Player.X]: 0,            // Reset the score for the Player X
+  //     [Player.O]: 0,            // Reset the score for the Player O
+  //   }
+  // }
+  return initializeGame();
+};
+
+function calculateWinner(board: (Player | null)[]): Player | null {
   // define the winning combination
   // winningCombination array defines all possible
   // sets of positions that constitute a win
@@ -93,21 +129,10 @@ export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
     }
   }
 
-  // chec for draw
-
-  if (!board.includes(null)) {
-    return 'Draw'
-  }
-
-  return null
+  // no winner found 
+  return null;
 }
 
-
-
-export function nextPlayer(currentPlayer: Player): Player {}
-
-export function resetGame(): GameState {}
-
-function calculateWinner(board: (Player | null)[]): Player | null {}
-
-function isBoardFull(board: (Player | null)[]): boolean {}
+function isBoardFull(board: (Player | null)[]): boolean {
+  return board.every(cell => cell !== null);
+}
