@@ -1,8 +1,12 @@
+
+//creating a object Player
 export enum Player {
   X = 'X',
   O = 'O',
 }
 
+
+// object typescripts
 export interface GameState {
   board: (Player | null)[]
   currentPlayer: Player
@@ -71,7 +75,10 @@ export function makeMove(state: GameState, position: number): GameState {
 }
 
 export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
-  const winner = calculateWinner(board);
+  // reuse this function
+  const winner = calculateWinner(board); 
+
+  //check condition of winner 
   if(winner){
     return winner;
   }else if(isBoardFull(board)){
