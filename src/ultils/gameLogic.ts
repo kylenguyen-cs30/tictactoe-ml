@@ -87,16 +87,16 @@ export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
 	}
 }
 
-export function nextPlayer(currentPlayer: Player): Player {
-	return currentPlayer === Player.X ? Player.O : Player.X
-	/*
-    if (currentPlayer === Player.X) {
-      return Player.O
-    }else{
-      return Player.X
-    }
-  */
-}
+// export function nextPlayer(currentPlayer: Player): Player {
+// 	return currentPlayer === Player.X ? Player.O : Player.X
+// 	/*
+//     if (currentPlayer === Player.X) {
+//       return Player.O
+//     }else{
+//       return Player.X
+//     }
+//   */
+// }
 
 export function resetGame(): GameState {
 	// return{

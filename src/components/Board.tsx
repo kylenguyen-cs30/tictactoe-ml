@@ -19,7 +19,7 @@ const Board = ({ board, onCellClick }: BoardProps) => {
         2. Javascript expression: inside this JSX, you want to run a Javascript expression
     */
 	return (
-		<div className="grid grid-cols-3 gap4">
+		<div className="grid grid-cols-3 gap-4">
 			{board.map((value, index) => (
 				<Cell
 					key={index} // unique key for each cell
