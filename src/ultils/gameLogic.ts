@@ -1,3 +1,4 @@
+import Scoreboard from '@/components/Scoreboard'
 import { Player } from '../components/PlayerEnum'
 
 // //creating a object Player
@@ -64,6 +65,23 @@ export function makeMove(state: GameState, position: number): GameState {
 	// ': Player.X': The `:` marks the beginning of the else-clause. if the condition is false,
 	// (i.e., the current player is not `Player.X`), then `Player.X` is the result. So if the current player
 	// is `Player.O`, the next player should `Player.X'
+
+	// Calculate the winner when there is a winner
+	const winner = calculateWinner(newBoard)
+
+	// Handle case where there is a winner
+	if (winner || isBoardFull(newBoard)) {
+		// newScore references
+		const newScore = {...state.scores};
+		// update scores when there is a winner 
+		if (winner === Player.X) {
+			// updates scores for Player X
+			newScore[Player.X]++; 
+		}else{
+			// updates scores for Player O
+			newScore[Player.O]++;
+		}
+	}
 
 	// step 4 : return the updated state
 	return {
