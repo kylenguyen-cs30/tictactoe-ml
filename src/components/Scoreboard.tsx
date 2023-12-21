@@ -10,7 +10,7 @@ type ScoreboardProps ={
 
 const Scoreboard = ({scores}: ScoreboardProps ) =>{
     return(
-        <div className='scoreboard'>
+        <div className='scoreboard flex flex-col items-center text-black'>
             <div>Player X: {scores[Player.X]}</div>
             <div>Player O: {scores[Player.O]}</div>
         </div>
