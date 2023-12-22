@@ -82,6 +82,7 @@ export function makeMove(state: GameState, position: number): GameState {
 	// is `Player.O`, the next player should `Player.X'
 
 	// step 4 : return the updated state
+	// this part return 
 	return {
 		...state, // spread operator.
 		board: newBoard, // update the board
