@@ -1,11 +1,5 @@
-import Scoreboard from '@/components/Scoreboard'
+import Scoreboard from '../components/Scoreboard'
 import { Player } from '../components/PlayerEnum'
-
-// //creating a object Player
-// export enum Player {
-//   X = 'X',
-//   O = 'O',
-// }
 
 // object typescripts
 export interface GameState {
@@ -55,6 +49,27 @@ export function makeMove(state: GameState, position: number): GameState {
 	const newBoard = [...state.board]
 	newBoard[position] = state.currentPlayer
 
+	// use checkWinner to determine the game result
+	const gameResult = checkWinner(newBoard)
+
+	// If the game already have a winner or is draw, not futher move should be allowed
+	if (checkWinner(state.board) !== null || isBoardFull(state.board)) {
+		return state
+	}
+
+	// if there is  a winner or draw, handle the game conclusion
+	if (gameResult === Player.X || gameResult === Player.O) {
+		// using spread operator in JS. for cloning an object
+		// in react, it is a good practice to treat state as immutable. this means programmer should not directly modify the state the object
+		// instead, we should create a new object with the updated values
+		const newScores = { ...state.scores }
+		if (gameResult === Player.X) {
+			newScores[Player.X]++
+		} else if (gameResult === Player.O) {
+			newScores[Player.O]++
+		}
+	}
+
 	// step 3 : switch the current player
 	const nextPlayer = state.currentPlayer === Player.X ? Player.O : Player.X
 	// state.currentPlayer === Player.X: this is a condition that checks if the current player is 'Player.X'
@@ -66,28 +81,11 @@ export function makeMove(state: GameState, position: number): GameState {
 	// (i.e., the current player is not `Player.X`), then `Player.X` is the result. So if the current player
 	// is `Player.O`, the next player should `Player.X'
 
-	// Calculate the winner when there is a winner
-	const winner = calculateWinner(newBoard)
-
-	// Handle case where there is a winner
-	if (winner || isBoardFull(newBoard)) {
-		// newScore references
-		const newScore = {...state.scores};
-		// update scores when there is a winner 
-		if (winner === Player.X) {
-			// updates scores for Player X
-			newScore[Player.X]++; 
-		}else{
-			// updates scores for Player O
-			newScore[Player.O]++;
-		}
-	}
-
 	// step 4 : return the updated state
 	return {
-		...state,
-		board: newBoard,
-		currentPlayer: nextPlayer,
+		...state, // spread operator.
+		board: newBoard, // update the board
+		currentPlayer: nextPlayer, // update the current player
 	}
 }
 

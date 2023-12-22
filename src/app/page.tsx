@@ -1,25 +1,30 @@
 'use client'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { initializeGame, makeMove} from '../ultils/gameLogic'
+import { checkWinner, initializeGame, makeMove } from '../ultils/gameLogic'
 import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
 
 export default function Home() {
-	
 	// usestate variable to set the state of the game
-	const [gameState, setGameState] = useState(initializeGame());
+	const [gameState, setGameState] = useState(initializeGame())
+	const [gameStatus, setGameStatus] = useState<string | null>(null)
 
-	const handleCellClick = (position: number) =>{
-			const newState = makeMove(gameState, position);
-			setGameState(newState)
-	};
+	const handleCellClick = (position: number) => {
+		const newState = makeMove(gameState, position)
+		setGameState(newState)
+		const winner = checkWinner(newState.board)
+		if (winner) {
+			setGameStatus(
+				winner === 'Draw' ? 'Game is a Draw' : 'Winner is ${winner}'
+			)
+		}
+	}
 
-
-	const handleReset = () =>{
+	const handleReset = () => {
 		setGameState(initializeGame())
-	};
+	}
 
 	//Function to handle button click
 	return (
@@ -40,9 +45,13 @@ export default function Home() {
 					Created by Kyle Nguyen
 				</h2>
 
+				{/* Display Game Status */}
+
+				{gameStatus && <div className="game-status">{gameStatus}</div>}
+
 				{/* this is grid layout */}
 
-				<Board board={gameState.board} onCellClick={handleCellClick}/>
+				<Board board={gameState.board} onCellClick={handleCellClick} />
 
 				{/* Button to start a new game */}
 
@@ -50,12 +59,8 @@ export default function Home() {
 
 				{/* Score Board  */}
 
-				<Scoreboard scores={gameState.scores}/>
-
-				
-			
+				<Scoreboard scores={gameState.scores} />
 			</div>
-
 
 			<div>
 				<h2 className="text-2xl py-5" style={{ color: 'rgb(187, 171, 140)' }}>
