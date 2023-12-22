@@ -24,6 +24,7 @@ export default function Home() {
 
 	const handleReset = () => {
 		setGameState(initializeGame())
+		setGameStatus(null)
 	}
 
 	//Function to handle button click

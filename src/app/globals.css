@@ -21,6 +21,19 @@ body {
 	background-color: rgb(253, 247, 228);
 }
 
+@media (max-width: 600px){
+	.cell{
+		padding: 0.5rem;
+		width: 8vw;
+		height: 8vw;
+	}
+
+	.game-status{
+		font-size: 0.8;
+	}
+}
+
+
 /*
   background: linear-gradient(
       to bottom,
