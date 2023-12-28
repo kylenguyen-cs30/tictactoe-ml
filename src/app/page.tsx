@@ -22,6 +22,7 @@ export default function Home() {
 		}
 	}
 
+	// handle reset when user click on the 'start new button'
 	const handleReset = () => {
 		setGameState(initializeGame())
 		setGameStatus(null)

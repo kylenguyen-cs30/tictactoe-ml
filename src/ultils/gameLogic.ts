@@ -154,6 +154,6 @@ function calculateWinner(board: (Player | null)[]): Player | null {
 	return null
 }
 
-function isBoardFull(board: (Player | null)[]): boolean {
+export function isBoardFull(board: (Player | null)[]): boolean {
 	return board.every((cell) => cell !== null)
 }
