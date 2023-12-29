@@ -17,7 +17,7 @@ export default function Home() {
 		const winner = checkWinner(newState.board)
 		if (winner) {
 			setGameStatus(
-				winner === 'Draw' ? 'Game is a Draw' : 'Winner is ${winner}'
+				winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`
 			)
 		}
 	}
@@ -49,7 +49,7 @@ export default function Home() {
 
 				{/* Display Game Status */}
 
-				{gameStatus && <div className="game-status">{gameStatus}</div>}
+				{gameStatus && <div className="game-status text-black">{gameStatus}</div>}
 
 				{/* this is grid layout */}
 
