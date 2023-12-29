@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { checkWinner, initializeGame, makeMove } from '../ultils/gameLogic'
+import { checkWinner, initializeGame, makeMove, resetGame } from '../ultils/gameLogic'
 import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
@@ -24,9 +24,9 @@ export default function Home() {
 
 	// handle reset when user click on the 'start new button'
 	const handleReset = () => {
-		setGameState(initializeGame())
+		setGameState(resetGame(gameState.scores))
 		setGameStatus(null)
-	}
+	};
 
 	//Function to handle button click
 	return (

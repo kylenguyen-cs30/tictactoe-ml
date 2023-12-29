@@ -1,14 +1,13 @@
 import Scoreboard from '../components/Scoreboard'
 import { Player } from '../components/PlayerEnum'
+import { ScoresType } from '../components/ScoresType'
+
 
 // object typescripts
 export interface GameState {
 	board: (Player | null)[]
 	currentPlayer: Player
-	scores: {
-		[Player.X]: number
-		[Player.O]: number
-	}
+	scores: ScoresType;
 }
 
 // core functions
@@ -49,6 +48,9 @@ export function makeMove(state: GameState, position: number): GameState {
 	const newBoard = [...state.board]
 	newBoard[position] = state.currentPlayer
 
+	// calculate the next player
+	const nextPlayer = state.currentPlayer === Player.X ? Player.O : Player.X
+
 	// use checkWinner to determine the game result
 	const gameResult = checkWinner(newBoard)
 
@@ -68,10 +70,18 @@ export function makeMove(state: GameState, position: number): GameState {
 		} else if (gameResult === Player.O) {
 			newScores[Player.O]++
 		}
+		return{
+			...state,
+			board: newBoard,
+			currentPlayer: nextPlayer,
+			scores: newScores
+		};
 	}
 
 	// step 3 : switch the current player
-	const nextPlayer = state.currentPlayer === Player.X ? Player.O : Player.X
+	//const nextPlayer = state.currentPlayer === Player.X ? Player.O : Player.X
+
+
 	// state.currentPlayer === Player.X: this is a condition that checks if the current player is 'Player.X'
 	//
 	// '? Player.O': the '?' makes begining the then-clause. if the condition (`state.currentPlayer === Player.X`)
@@ -115,16 +125,24 @@ export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
 //   */
 // }
 
-export function resetGame(): GameState {
-	// return{
-	//   board: Array(9).fill(null), // reset the board all empty cells
-	//   currentPlayer: Player.X,    // reset the starting player to Player.X
-	//   scores:{
-	//     [Player.X]: 0,            // Reset the score for the Player X
-	//     [Player.O]: 0,            // Reset the score for the Player O
-	//   }
-	// }
-	return initializeGame()
+// export function resetGame(): GameState {
+// 	// return{
+// 	//   board: Array(9).fill(null), // reset the board all empty cells
+// 	//   currentPlayer: Player.X,    // reset the starting player to Player.X
+// 	//   scores:{
+// 	//     [Player.X]: 0,            // Reset the score for the Player X
+// 	//     [Player.O]: 0,            // Reset the score for the Player O
+// 	//   }
+// 	// }
+// 	return initializeGame()
+// }
+
+export function resetGame(currentScores: ScoresType): GameState{
+	return{
+		board: Array(9).fill(null),
+		currentPlayer: Player.X,
+		scores: currentScores
+	};
 }
 
 function calculateWinner(board: (Player | null)[]): Player | null {
