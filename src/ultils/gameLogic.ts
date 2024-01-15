@@ -64,17 +64,17 @@ export function makeMove(state: GameState, position: number): GameState {
 		// using spread operator in JS. for cloning an object
 		// in react, it is a good practice to treat state as immutable. this means programmer should not directly modify the state the object
 		// instead, we should create a new object with the updated values
-		const newScores = { ...state.scores }
-		if (gameResult === Player.X) {
+		const newScores = { ...state.scores } // clone the score object
+		if (gameResult === Player.X) { // if the game result is Player.X, increment the score the Player.X
 			newScores[Player.X]++
-		} else if (gameResult === Player.O) {
+		} else if (gameResult === Player.O) { // if the game result is Player.O, increment the score the Player.O
 			newScores[Player.O]++
 		}
-		return{
-			...state,
-			board: newBoard,
-			currentPlayer: nextPlayer,
-			scores: newScores
+		return{ // return the updated state
+			...state, // spread operator. for cloning an object
+			board: newBoard, // update the board
+			currentPlayer: nextPlayer, // update the current player
+			scores: newScores // update the scores
 		};
 	}
 
@@ -105,37 +105,19 @@ export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
 	const winner = calculateWinner(board)
 
 	//check condition of winner
-	if (winner) {
+	if (winner) { 
+		// if there is a winner that 
+		// match up with the winning combination
 		return winner
 	} else if (isBoardFull(board)) {
+		// if there is no winner is not having any winning combination 
+		// and the board is full, then return "Draw"
 		return 'Draw'
 	} else {
+		// continue the game 
 		return null
 	}
 }
-
-// export function nextPlayer(currentPlayer: Player): Player {
-// 	return currentPlayer === Player.X ? Player.O : Player.X
-// 	/*
-//     if (currentPlayer === Player.X) {
-//       return Player.O
-//     }else{
-//       return Player.X
-//     }
-//   */
-// }
-
-// export function resetGame(): GameState {
-// 	// return{
-// 	//   board: Array(9).fill(null), // reset the board all empty cells
-// 	//   currentPlayer: Player.X,    // reset the starting player to Player.X
-// 	//   scores:{
-// 	//     [Player.X]: 0,            // Reset the score for the Player X
-// 	//     [Player.O]: 0,            // Reset the score for the Player O
-// 	//   }
-// 	// }
-// 	return initializeGame()
-// }
 
 export function resetGame(currentScores: ScoresType): GameState{
 	return{
@@ -169,6 +151,7 @@ function calculateWinner(board: (Player | null)[]): Player | null {
 	}
 
 	// no winner found
+	// continue the game
 	return null
 }
 
