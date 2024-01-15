@@ -33,6 +33,23 @@ body {
 	}
 }
 
+.animate-click {
+    animation: click-animation 300ms ease-in-out;
+}
+
+
+@keyframes click-animation {
+	0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1); /* Scale up a bit */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 
 /*
   background: linear-gradient(
