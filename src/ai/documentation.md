@@ -1,49 +1,6 @@
+# REINFORCEMENT LEARNING is a machine learning model that is using learning over time tech in order to imporve the intelligent. 
 
-
-class RLAgent {
-    private qTable: Map<string, Map<string, number>>;
-    private learningRate: number;
-    private discountFactor: number;
-    private epsilon: number;
-    
-    constructor(){
-        // Initialize Q-Table
-        // using a map to store state-action and their Q-Values
-        this.qTable = new Map(); 
-        // Learning rate (alpha) - controls how much the Q-Value is updated
-        this.learningRate = learningRate; 
-        // dicount factor (gamma) - importance of future reward
-        this.discountFactor = discountFactor;
-        // Epsilon - controls the trade-off between exploration and exploitation
-        this.epsilon = epsilon;
-    }
-    
-    // given a state, choose an action
-
-    chooseAction(state){
-
-    }
-
-    // updaet the Q-Table
-    updateQTable(state,action, reward, nextState){}
-
-    // Train the agent
-    train(episodes){
-        for (let i = 0; i < episodes; i++) {
-            
-        }
-    }
-
-}
-
-export default RLAgent;
-
-
-/*
-REINFORCEMENT LEARNING is a machine learning model that is using learning over time tech in order to 
-imporve the intelligent. 
-
-key terminology :
+# key terminology :
 
 - State Representation : define how you will repsent the state of the Tic Tac Toe board in a way that the RL agent 
 can understand. this could be a simple string or numerical representation of the board.
@@ -54,7 +11,7 @@ can understand. this could be a simple string or numerical representation of the
 - Reward : Define the reward structure. Commonly, wins could have a positive reward, losses a negative reward,
 
 
-DOCUMENTATION: 
+# DOCUMENTATION: 
 
 1. constructor(): 
 
@@ -89,8 +46,10 @@ state-action pair based on the observed reward and the maximum expected future r
 
 4. train(episodes):
 
+- this method is responsible for trainning the RL agent
 
+- Input- `episodes`: the number of games the agent should play to learn from. 
 
+- Functionality: the agent plays sever games against either itself or a predefined strategy, learning from each game's outcome. It repeatedly calls
 
-
-*/
+- `chooseAction` to make decissions and `updateQTable` to learn from the results of those decisions. Trainning involves letting the agent explore different strtegies, make mistakes, and gradually improve its policy (strategy) for choosing actions.

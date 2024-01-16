@@ -1,5 +1,5 @@
 'use client'
-import Image from 'next/image'
+//import Image from 'next/image'
 import React, { useState } from 'react'
 import { checkWinner, initializeGame, makeMove, resetGame } from '../ultils/gameLogic'
 import Board from '../components/Board'
