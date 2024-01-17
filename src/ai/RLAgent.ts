@@ -6,7 +6,7 @@ class RLAgent {
     private discountFactor: number;
     private epsilon: number;
     
-    constructor(){
+    constructor(learningRate = 0.1, discountFactor = 0.9, epsilon = 0.1){
         // Initialize Q-Table
         // using a map to store state-action and their Q-Values
         this.qTable = new Map(); 
@@ -20,9 +20,24 @@ class RLAgent {
     
     // given a state, choose an action
 
-    chooseAction(state){
+    chooseAction(state: string): number{
+        // Exploration: Choose a random action
+        if(Math.random() < this.epsilon){
+            // Exploration: choose a random action
+            return this.chooseRandomAction(state);
+        }else{
+            // Exploitation: choose the action with the highest Q-Value
+            return this.chooseBestAction(state);
+        }
+
 
     }
+
+    private chooseRandomAction(state: string): number{}
+
+    private chooseBestAction(state:string): number{}
+
+
 
     // updaet the Q-Table
     updateQTable(state,action, reward, nextState){}
