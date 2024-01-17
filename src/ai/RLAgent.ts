@@ -117,6 +117,52 @@ class RLAgent {
         }
     }
 
+    // initializeGameState
+    private initializeGameState():string{
+        // initialize the game state
+        return '---------'; 
+    }
+
+    // isTerminal
+    private isTerminal(state: string): boolean{
+        // implement logic to determine if the game is over
+        // this could involve chekcing for a win or draw
+        return this.checkForWin(state) || this.checkForDraw(state);
+    }
+
+    // checkForWin
+    private checkForWin(state:string): boolean{
+        // implement win-checking logic
+        return false;
+    }
+
+    // checkForDraw
+    private checkForDraw(state: string): boolean{
+        // check if there are no more empty cells and no win
+        return !state.includes('-') && !this.checkForWin(state);
+    }
+
+    // takeAction
+    private takeAction(state: string, action: number): {nextState: string, reward: number}{
+        // implement the logic to update the state based on the action
+        // and determine the reward for the action
+        let nextState = this.updateState(state, action);
+        let reward = this.calculateReward(state, action);
+        return {nextState, reward}
+    }
+
+    // updateState
+    private updateState(state: string, action: number): string{
+        // update the board with the agent's action
+        return "---------";
+    }
+
+    // calculateReward
+    private calculateReward(state: string, action: number): number{
+        // Calculate the reward based on the state
+        return 0;
+    }
+
 }
 
 export default RLAgent;
