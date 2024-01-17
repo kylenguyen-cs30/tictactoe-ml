@@ -53,3 +53,16 @@ state-action pair based on the observed reward and the maximum expected future r
 - Functionality: the agent plays sever games against either itself or a predefined strategy, learning from each game's outcome. It repeatedly calls
 
 - `chooseAction` to make decissions and `updateQTable` to learn from the results of those decisions. Trainning involves letting the agent explore different strtegies, make mistakes, and gradually improve its policy (strategy) for choosing actions.
+
+
+- Q-Value in reinforcement learning is a fundamental concept, particularly in Q-learning, a specific type of reinforcement learning. 
+
+1. Basic Definition : A Q-value, or "Quality" value, is a numerical measure used in reinforcement learning to represent the expected utility of taking a certain action in a given state. it essentially answer the questions.
+
+2. Purpose : Q-value helps the learning agent (like your AI in Tic Tac Toe) make decisions. By comparing the Q-Values of different actions in a given state, the agent can choose the action that it believes will yeild the highest reward, not just immediately, but over time. 
+
+3. Calculation: in Q-learning, the Q-value for state action pair is calculated using the Bellman equation, which considers: 
+    * the immediate reward received after taking action
+    * the discounted future rewards that the agent expects to receive from the next state. This is where the 'discount factor' plays a role, indicating the importance of future rewards compared to immediate rewards. 
+
+## 

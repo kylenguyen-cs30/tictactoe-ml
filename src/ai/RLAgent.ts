@@ -19,7 +19,7 @@ class RLAgent {
     }
     
     // given a state, choose an action
-
+    // method to choose the next action
     chooseAction(state: string): number{
         // Exploration: Choose a random action
         if(Math.random() < this.epsilon){
@@ -32,20 +32,88 @@ class RLAgent {
 
 
     }
+    // helper to choose a random valid action
+    private chooseRandomAction(state: string): number{
+        const validActions = this.getValidActions(state)
+        return validActions[Math.floor(Math.random() * validActions.length)]
+    }
+    // helper method to get valid actions (empty cells) from the current state
+    private getValidActions(state: string): number[]{
+        // Convert the state into an array of valid actions (indices of empty cells)
+        return state.split('').map((cell,index) => cell ==='-' ? index :-1).filter(index => index !== -1)
+    }
 
-    private chooseRandomAction(state: string): number{}
+    // helper method to choose the best action based on Q-values
+    private chooseBestAction(state:string): number{
+        const validActions = this.getValidActions(state)
+        let bestAction = validActions[Math.floor(Math.random()* validActions.length)]
+        let maxQValue = Number.NEGATIVE_INFINITY;
 
-    private chooseBestAction(state:string): number{}
+        // check if the current state is in the Q-Table
+        if(this.qTable.has(state)){
+            validActions.forEach(action =>{
+                // retrieve the Q-Value for the each action and update the best action if needed
+                const qValue = this.qTable.get(state)?.get(action.toString()) || 0;
+                if(qValue > maxQValue){
+                    maxQValue = qValue;
+                    bestAction = action;
+                }
+            });
+        }
+
+        return bestAction;
+
+    }
 
 
 
-    // updaet the Q-Table
-    updateQTable(state,action, reward, nextState){}
+    // update the Q-Table
+    updateQTable(state : string,action : number, reward : number, nextState : string){
+        // Initialize Q-value for the current state-action pair if not already
+        if(!this.qTable.has(state)){
+            this.qTable.set(state, new Map())
+        }
+        if(!this.qTable.get(state)?.has(action.toString())){
+            this.qTable.get(state)?.set(action.toString(),0)
+        }
+
+        // Get current Q-value for the state-action pair
+        const currentQValue = this.qTable.get(state)?.get(action.toString()) || 0;
+
+        // Calculate the maximum Q-Value for the next state
+        let maxNextQValue = 0
+        const nextStateValue = this.qTable.get(nextState)
+        if(nextStateValue){
+            maxNextQValue = Math.max(...Array.from(nextStateValue.values()));
+        }
+
+        // Calculate the new Q-Value using the Q-learning formula
+        const newQValue = currentQValue + this.learningRate * (reward + this.discountFactor * maxNextQValue - currentQValue);
+
+        // Update the Q-Table with the new Q-value
+        this.qTable.get(state)?.set(action.toString(), newQValue);        
+    }
 
     // Train the agent
-    train(episodes){
+    train(episodes : number){
         for (let i = 0; i < episodes; i++) {
-            
+            // initialize the state (start a new game)
+            let state = this.initializeGameState()
+
+            // Continue the episode until it reaches a terminal state
+            while(!this.isTerminal(state)){
+                // choose an action based on the current state
+                const action = this.chooseAction(state)
+
+                // take the action, observe the new state and reward
+                const {nextState, reward} = this.takeAction(state, action)
+
+                // update the Q-Table based on the state, action, reward and next state
+                this.updateQTable(state, action, reward, nextState)
+
+                // Move to the next state
+                state = nextState
+            }
         }
     }
 
@@ -53,59 +121,3 @@ class RLAgent {
 
 export default RLAgent;
 
-
-/*
-REINFORCEMENT LEARNING is a machine learning model that is using learning over time tech in order to 
-imporve the intelligent. 
-
-key terminology :
-
-- State Representation : define how you will repsent the state of the Tic Tac Toe board in a way that the RL agent 
-can understand. this could be a simple string or numerical representation of the board.
-
-- Action Space: In Tictactoe, the action is relatively simple - choosing a cell to place the mark (X or O)
-. Ensure the agent knows the valid action at each state 
-
-- Reward : Define the reward structure. Commonly, wins could have a positive reward, losses a negative reward,
-
-
-DOCUMENTATION: 
-
-1. constructor(): 
-
-- The `constructor` method is called when a new instance of `RLAgent` is created. it is used
-to initialize the agent with properties it will need.
-
-- `this.qTable` : this is a data structure ( like a Map or an Object) used to store the 
-Q-Values for state-action pairs. Q-Values represent the "quality" or expected utility of taking
-a given action in a given state.
-
-2. chooseAction(state): 
-
-- this method determines which action the agent should take in a given state.
-
-- input - `state`: represent the current state of the environment (the Tic Tac Toe board in your case).
-
-- output: chosen action (e.g. the position where the agent decides to place its mark on the Tic Tac Toe Board)
-
-- Functionality: initially, this might involve choosing an action randomly or following a simple heuristic. as the 
-agent learns it should use the information in the Q-table to choose actions that maximize expected rewards
-
-3. updateQTable(state, action, reward, nextState): 
-
-- this method updates the Q-Table based on the agent experience.
-- inputs: 
-    * `state`: the current state of the environment
-    * `action`: the action taken by the agent
-    * `reward`: the reward received for taking the action
-    * `nextState`: the next state of the environment after taking the action
-- Functionality : the method implements the Q-Learning update rule it. It adjust the Q-Value for the given
-state-action pair based on the observed reward and the maximum expected future rewards (derived from the `nextState`)
-
-4. train(episodes):
-
-
-
-
-
-*/
