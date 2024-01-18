@@ -65,4 +65,106 @@ state-action pair based on the observed reward and the maximum expected future r
     * the immediate reward received after taking action
     * the discounted future rewards that the agent expects to receive from the next state. This is where the 'discount factor' plays a role, indicating the importance of future rewards compared to immediate rewards. 
 
-## 
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## train() method documentation
+
+- this method is responsible for trainning the RL agent
+
+```
+    // Train the agent
+    train(episodes : number){
+        for (let i = 0; i < episodes; i++) {
+            // initialize the state (start a new game)
+            let state = this.initializeGameState()
+
+            // Continue the episode until it reaches a terminal state
+            while(!this.isTerminal(state)){
+                // choose an action based on the current state
+                const action = this.chooseAction(state)
+
+                // take the action, observe the new state and reward
+                const {nextState, reward} = this.takeAction(state, action)
+
+                // update the Q-Table based on the state, action, reward and next state
+                this.updateQTable(state, action, reward, nextState)
+
+                // Move to the next state
+                state = nextState
+            }
+        }
+    }
+
+```
+
+- Input- `episodes`: the number of games the agent should play to learn from.
+- Functionality: the agent plays sever games against either itself or a predefined strategy, learning from each game's outcome. It repeatedly calls
+- `chooseAction` to make decissions and `updateQTable` to learn from the results of those decisions. Trainning involves letting the agent
+
+### train() method helper
+
+#### initializeGameState()
+
+```
+private initializeGameState():string{
+        // initialize game state
+        return '---------'; 
+}
+```
+
+- this method initializes the game state.
+- input: none
+- output: the initial game state
+- Functionality: this method initializes the game state. It is called at the start of each new game.
+
+
+#### isTerminal() 
+
+```
+private isTerminal(state: string): boolean{
+        // implement logic to determine if the game is over
+        // this could involve chekcing for a win or draw
+        return this.checkForWin(state) || this.checkForDraw(state);
+}
+
+```
+
+- this method determines if the game is over.
+- input: `state`: the current game state
+- output: `boolean`: true if the game is over, false otherwise
+- Functionality: this method determines if the game is over. It is called at the end of each game.
+
+
+#### checkForWin()
+
+```
+private checkForWin(state: string):boolean{
+    // check if the game is over
+    return false
+}
+```
+
+- this method determines if the game is over.
+- input: `state`: the current game state
+- output: `boolean`: true if the game is over, false otherwise
+- Functionality: this method determines if the game is over. It is called at the end of each game.
+
+#### takeAction()
+
+```
+private takeAction(state: string, action: number): {nextState: string, reward: number}{
+        // implement the logic to update the state based on the action
+        // and determine the reward for the action
+        let nextState = this.updateState(state, action);
+        let reward = this.calculateReward(state, action);
+        return {nextState, reward}
+}
+```
+
+- this method takes the action and updates the game state.
+- input: `state`: the current game state, `action`: the action taken
+- output: `nextState`: the new game state, `reward`: the reward for the action
+- Functionality: this method takes the action and updates the game state. It is called at the end of each game.
