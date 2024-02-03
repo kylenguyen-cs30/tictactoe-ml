@@ -1,8 +1,3 @@
-/*
-Initialize the Q-Table constructor
-
-Machine learning implementation 
-*/
 
 
 class RLAgent {
@@ -23,6 +18,8 @@ class RLAgent {
 		this.epsilon = epsilon
 	}
 
+
+
 	// given a state, choose an action
 	// method to choose the next action
 	chooseAction(state: string): number {
@@ -35,6 +32,8 @@ class RLAgent {
 			return this.chooseBestAction(state)
 		}
 	}
+
+	
 	// helper to choose a random valid action
 	private chooseRandomAction(state: string): number {
 		const validActions = this.getValidActions(state)

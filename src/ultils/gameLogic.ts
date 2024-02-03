@@ -10,7 +10,9 @@ export interface GameState {
 	scores: ScoresType;
 }
 
-// core functions
+
+
+
 
 // initialize the game when use click "start new game" button
 export function initializeGame(): GameState {
@@ -78,21 +80,7 @@ export function makeMove(state: GameState, position: number): GameState {
 		};
 	}
 
-	// step 3 : switch the current player
-	//const nextPlayer = state.currentPlayer === Player.X ? Player.O : Player.X
-
-
-	// state.currentPlayer === Player.X: this is a condition that checks if the current player is 'Player.X'
-	//
-	// '? Player.O': the '?' makes begining the then-clause. if the condition (`state.currentPlayer === Player.X`)
-	// is true, then the value of the expression is '
-	//
-	// ': Player.X': The `:` marks the beginning of the else-clause. if the condition is false,
-	// (i.e., the current player is not `Player.X`), then `Player.X` is the result. So if the current player
-	// is `Player.O`, the next player should `Player.X'
-
-	// step 4 : return the updated state
-	// this part return 
+	
 	return {
 		...state, // spread operator.
 		board: newBoard, // update the board
