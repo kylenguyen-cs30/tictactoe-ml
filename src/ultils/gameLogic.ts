@@ -1,6 +1,15 @@
 import Scoreboard from '../components/Scoreboard'
 import { Player } from '../components/PlayerEnum'
 import { ScoresType } from '../components/ScoresType'
+import RLAgent from '../ai/RLAgent'
+import React,{useState} from 'react'
+
+/**
+ * Converts the game board into a string representation.
+ * @param board The game board as an array of Player or null values.
+ * @returns A string representation of the board.
+ */
+
 
 
 // object typescripts
@@ -10,6 +19,9 @@ export interface GameState {
 	scores: ScoresType;
 }
 
+
+// intialize the RLAgent Instance
+const rlAgent = new RLAgent()
 
 
 
@@ -88,6 +100,9 @@ export function makeMove(state: GameState, position: number): GameState {
 	}
 }
 
+
+
+
 export function checkWinner(board: (Player | null)[]): Player | 'Draw' | null {
 	// reuse this function
 	const winner = calculateWinner(board)
@@ -146,3 +161,101 @@ function calculateWinner(board: (Player | null)[]): Player | null {
 export function isBoardFull(board: (Player | null)[]): boolean {
 	return board.every((cell) => cell !== null)
 }
+
+
+//----------------------------------------------------------------------------------------------------------//
+// AI Integration
+
+// Assuming you have a function to get the current game state as a string
+function getCurrentGameState(): string {
+    // Implementation depends on how your game state is stored.
+    // This should match the state format expected by RLAgent
+	return '___'
+}
+
+// Assume this function is part of your game logic where you handle turns.
+function onPlayerMove(position: number, gameState: GameState, setGameState: (newState: GameState) => void) {
+	let newState = makeMove(gameState, position);
+	setGameState(newState);
+  
+	// Check if the game is over after the player's move
+	if (isGameOver(newState)) {
+	  // Handle game over logic
+	} else {
+	  // It's AI's turn now
+	  let aiState = aiMakeMove(newState,setGameState)
+	}
+}
+
+// game over check
+function isGameOver(state: GameState): boolean{
+	// implement logic to check for a win or draw
+	return checkWinner(state.board) !== null || isBoardFull(state.board)
+}
+
+// Function called within the game loop or event handler
+export function aiMakeMove(gameState: GameState, setGameState:(newState:GameState) => void):GameState {
+    
+
+	const currentStateString = convertBoardToString(gameState.board)
+	const aiAction = rlAgent.chooseAction(currentStateString)
+	let newState = applyActionToGameState(gameState, aiAction, Player.O)
+
+	// Assuming applyActionToGameState modifies the state directly or returns a new state
+	setGameState(newState)
+
+	// After AI's move, check if the game is over
+	if (isGameOver(newState)) {
+		// handle game over logic
+	}
+
+	return newState
+}
+
+// You need to implement applyActionToGameState, calculateReward, and other necessary functions
+// based on your game's rules and state representation.
+
+
+// In gameLogic.ts
+export function applyActionToGameState(currentState: GameState, action: number, player: Player): GameState {
+    // Logic to apply the move to the game state
+    // This is a simplified example, adjust based on your actual game state structure
+    let newState = { ...currentState };
+    if (newState.board[action] === null) {
+        newState.board[action] = player;
+        // Additional logic to update game state based on the move
+    }
+    return newState;
+}
+
+// Then, in your React component or wherever you manage state:
+// import { applyActionToGameState } from './gameLogic';
+// Use applyActionToGameState to update the game state based on the AI's chosen action
+
+
+export function handlePlayerMove(position: number, gameState: GameState, setGameState: (newState: GameState) => void): void{
+	let newState = makeMove(gameState, position)
+
+	//update game state based on player's move
+
+	if (!isGameOver(newState)) {
+		newState = aiMakeMove(newState,setGameState)
+	}
+}
+
+export function convertBoardToString(board: (Player | null)[]): string{
+	return board.map(cell => {
+		switch (cell) {
+			case Player.X:
+				return 'X'
+			case Player.O:
+				return 'O'
+			case null:
+				return '-'
+			default:
+				return '-';
+		}
+	}).join('');
+}
+
+

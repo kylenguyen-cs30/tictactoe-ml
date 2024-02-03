@@ -1,24 +1,63 @@
 'use client'
 //import Image from 'next/image'
 import React, { useState } from 'react'
-import { checkWinner, initializeGame, makeMove, resetGame } from '../ultils/gameLogic'
+import { 
+	checkWinner,
+	initializeGame, 
+	makeMove, 
+	resetGame, 
+	convertBoardToString, 
+	applyActionToGameState, 
+	aiMakeMove 
+} from '../ultils/gameLogic'
 import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
+import RLAgent from '../ai/RLAgent'
+
+const rlAgent = new RLAgent() 
 
 export default function Home() {
 	// usestate variable to set the state of the game
 	const [gameState, setGameState] = useState(initializeGame())
 	const [gameStatus, setGameStatus] = useState<string | null>(null)
 
-	const handleCellClick = (position: number) => {
-		const newState = makeMove(gameState, position)
+	const triggerAIMove = () =>{
+		aiMakeMove(gameState,setGameState)
+	}
+
+	// when player click on box 
+	// const handleCellClick = (position: number) => {
+	// 	const newState = makeMove(gameState, position)
+	// 	setGameState(newState)
+	// 	const winner = checkWinner(newState.board)
+	// 	if (winner) {
+	// 		setGameStatus(
+	// 			winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`
+	// 		)
+	// 	}
+	// }
+
+	const handleCellClick = (position: number) =>{
+		// human move 
+		let newState = makeMove(gameState, position)
 		setGameState(newState)
-		const winner = checkWinner(newState.board)
+
+		// check for game over
+		let winner = checkWinner(newState.board)
 		if (winner) {
-			setGameStatus(
-				winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`
-			)
+			setGameStatus(winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`)
+		}else{
+			// AI's turn 
+			const aiAction = rlAgent.chooseAction(convertBoardToString(newState.board))
+			newState = makeMove(newState, aiAction)
+			setGameState(newState)
+
+			// update game status based on ai move
+			winner = checkWinner(newState.board)
+			if (winner) {
+				setGameStatus(winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`)
+			}
 		}
 	}
 
@@ -64,11 +103,6 @@ export default function Home() {
 				<Scoreboard scores={gameState.scores} />
 			</div>
 
-			<div>
-				<h2 className="text-2xl py-5" style={{ color: 'rgb(187, 171, 140)' }}>
-					Please visit my github:{' '}
-				</h2>
-			</div>
 		</main>
 	)
 }
