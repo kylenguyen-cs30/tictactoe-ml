@@ -105,30 +105,25 @@ class RLAgent {
 		this.qTable.get(state)?.set(action.toString(), newQValue)
 	}
 
-	// Train the agent
+
+	// Train Agent Function
+	// This funtion responsible for training the AI. 
 	train(episodes: number) {
-		for (let i = 0; i < episodes; i++) {
-			// initialize the state (start a new game)
-			let state = this.initializeGameState()
+		for (let episode = 0; episode < episodes; episode++) {
+			let state = this.initializeGameState();
+			let done = false;
 
-			// Continue the episode until it reaches a terminal state
-			while (!this.isTerminal(state)) {
-				// choose an action based on the current state
+			while (!done) {
 				const action = this.chooseAction(state)
-
-				// take the action, observe the new state and reward
-				const { nextState, reward } = this.takeAction(state, action)
-
-				// update the Q-Table based on the state, action, reward and next state
+				const {nextState, reward, done} = this.takeAction(state,action)
 				this.updateQTable(state, action, reward, nextState)
-
-				// Move to the next state
 				state = nextState
+
+				if (done) {
+					// log the episode's outcome
+					console.log(`Episode ${episode+1}: Game Over`)
+				}
 			}
-            //log progress
-            if (i % 1000 === 0) {
-                console.log(`Training Episode ${i} completed`)
-            }
 		}
 	}
 
@@ -142,7 +137,7 @@ class RLAgent {
 	private isTerminal(state: string): boolean {
 		// implement logic to determine if the game is over
 		// this could involve chekcing for a win or draw
-		return this.checkForWin(state) || this.checkForDraw(state)
+		return this.checkForWin(state) || this.checkForDraw(state) || this.isBoardFull(state)
 	}
 
 	// checkForWin
@@ -176,12 +171,13 @@ class RLAgent {
 	private takeAction(
 		state: string,
 		action: number
-	): { nextState: string; reward: number } {
+	): { nextState: string; reward: number; done: boolean } {
 		// implement the logic to update the state based on the action
 		// and determine the reward for the action
 		let nextState = this.updateState(state, action)
 		let reward = this.calculateReward(state, action)
-		return { nextState, reward }
+		let done = this.isTerminal(nextState)
+		return { nextState, reward, done }
 	}
 
 	// updateState
@@ -202,6 +198,11 @@ class RLAgent {
             return 0; // no reward for continuting game
         }
 	}
+
+	private isBoardFull(state: string): boolean{
+		return !state.includes('-');
+	}
 }
+
 
 export default RLAgent

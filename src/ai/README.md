@@ -75,28 +75,24 @@ state-action pair based on the observed reward and the maximum expected future r
 - this method is responsible for trainning the RL agent
 
 ```
-    // Train the agent
-    train(episodes : number){
-        for (let i = 0; i < episodes; i++) {
-            // initialize the state (start a new game)
-            let state = this.initializeGameState()
+    train(episodes: number) {
+		for (let episode = 0; episode < episodes; episode++) {
+			let state = this.initializeGameState();
+			let done = false;
 
-            // Continue the episode until it reaches a terminal state
-            while(!this.isTerminal(state)){
-                // choose an action based on the current state
-                const action = this.chooseAction(state)
+			while (!done) {
+				const action = this.chooseAction(state)
+				const {nextState, reward, done} = this.takeAction(state,action)
+				this.updateQTable(state, action, reward, nextState)
+				state = nextState
 
-                // take the action, observe the new state and reward
-                const {nextState, reward} = this.takeAction(state, action)
-
-                // update the Q-Table based on the state, action, reward and next state
-                this.updateQTable(state, action, reward, nextState)
-
-                // Move to the next state
-                state = nextState
-            }
-        }
-    }
+				if (done) {
+					// log the episode's outcome
+					console.log(`Episode ${episode+1}: Game Over`)
+				}
+			}
+		}
+	}
 
 ```
 
