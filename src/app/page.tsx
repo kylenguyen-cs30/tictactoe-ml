@@ -26,17 +26,6 @@ export default function Home() {
 		aiMakeMove(gameState,setGameState)
 	}
 
-	// when player click on box 
-	// const handleCellClick = (position: number) => {
-	// 	const newState = makeMove(gameState, position)
-	// 	setGameState(newState)
-	// 	const winner = checkWinner(newState.board)
-	// 	if (winner) {
-	// 		setGameStatus(
-	// 			winner === 'Draw' ? 'Game is a Draw' : `Winner is Player ${winner}`
-	// 		)
-	// 	}
-	// }
 
 	const handleCellClick = (position: number) =>{
 		// human move 
@@ -52,6 +41,7 @@ export default function Home() {
 			const aiAction = rlAgent.chooseAction(convertBoardToString(newState.board))
 			newState = makeMove(newState, aiAction)
 			setGameState(newState)
+			console.log(aiAction)
 
 			// update game status based on ai move
 			winner = checkWinner(newState.board)
