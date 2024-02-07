@@ -13,7 +13,8 @@ QTable.ts
     Q-learning algorithm, which iteratively updates the Q-values based on the reward 
     received for actions taken, the learning rate, and the discount factor for future rewards.
 */
-import fs from 'fs';
+
+import fs, { stat } from 'fs';
 
 export class QTable{
     private table: Map<string, Map<number,number>>;
@@ -37,12 +38,51 @@ export class QTable{
             // Implementation of the Q-Learning update rule
             // similar to your updateQTable method in RLAgent.ts
 
+            if (!this.table.has(state)) {
+                this.table.set(state,new Map())
+            }
+            // get the current q-Value for the state-action pair, defaulting to 0 if
+            // it does not exist
+            let currentQValue = this.table.get(state)?.get(action) || 0;
+
+            let nextStateActions = this.table.get(nextState)
+            let maxNextQValue = 0;
+            if (nextStateActions) {
+                maxNextQValue = Math.max(...Array.from(nextStateActions.values()))
+            }
+
+            // calculate the new Q-Value using the Q-learning fomula
+            let newQValue = currentQValue + learningRate * (reward + discountFactor * maxNextQValue - currentQValue)
+
+            // update the Q-table with the new Q-value for the state-action pair
+            this.table.get(state)?.set(action, newQValue)
+
         }
 
     // Method to get the best action for a given state
+    // the data which this getBestAction() function is getting from pre-train session
+    // that is setting up and save into data sheets
     getBestAction(state : string): number{
         // logic to determine the best action
-        return 0
+
+        // Check if the state exists in the table
+        const stateActions = this.table.get(state);
+
+        // if there are no actions for this state, return -1
+        if (!stateActions || stateActions.size === 0) {
+            return -1;
+        }
+
+        // Iterate over all actions to find the one with highest Q-Value
+        let bestAction = -1
+        let maxQValue = -Infinity
+        for(const [action , qValue] of stateActions.entries()){
+            if (qValue > maxQValue) {
+                maxQValue = qValue
+                bestAction = action
+            }
+        }
+        return bestAction
     }
 
     // save the Q-table to a file
