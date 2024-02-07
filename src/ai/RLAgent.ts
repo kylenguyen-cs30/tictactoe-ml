@@ -77,6 +77,15 @@ class RLAgent {
 		reward: number,
 		nextState: string
 	) {
+		if (typeof action !== 'number') {
+			console.error('Invalid action',action)
+			return
+		}
+		// debug
+		console.log("state: ", state)
+		console.log("action: ", action)
+		console.log("reward: ", reward)
+		console.log("nextState: ", nextState)
 		// Initialize Q-value for the current state-action pair if not already
 		if (!this.qTable.has(state)) {
 			this.qTable.set(state, new Map())
@@ -111,9 +120,9 @@ class RLAgent {
 	train(episodes: number) {
 		for (let episode = 0; episode < episodes; episode++) {
 			let state = this.initializeGameState();
-			let done = false;
+			let loopDone = false;
 
-			while (!done) {
+			while (!loopDone) {
 				const action = this.chooseAction(state)
 				const {nextState, reward, done} = this.takeAction(state,action)
 				this.updateQTable(state, action, reward, nextState)
@@ -121,7 +130,8 @@ class RLAgent {
 
 				if (done) {
 					// log the episode's outcome
-					console.log(`Episode ${episode+1}: Game Over`)
+					loopDone = true
+					console.log(`Episode ${episode + 1}: Game Over`)
 				}
 			}
 		}
