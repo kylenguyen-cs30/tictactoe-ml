@@ -13,3 +13,50 @@ QTable.ts
     Q-learning algorithm, which iteratively updates the Q-values based on the reward 
     received for actions taken, the learning rate, and the discount factor for future rewards.
 */
+import fs from 'fs';
+
+export class QTable{
+    private table: Map<string, Map<number,number>>;
+
+    constructor(){ this.table = new Map()} // create a new Map()
+
+    // Method to update the Q-Value for a given state and action
+    /*
+    Q(s,a)=Q(s,a) + α × (r + γ × maxa′Q(s′,a′)−Q(s,a))
+    
+
+    */
+    update(
+        state:string,
+        action:number,
+        reward:number,
+        nextState:string,
+        learningRate: number, 
+        discountFactor: number
+        ){
+            // Implementation of the Q-Learning update rule
+            // similar to your updateQTable method in RLAgent.ts
+
+        }
+
+    // Method to get the best action for a given state
+    getBestAction(state : string): number{
+        // logic to determine the best action
+        return 0
+    }
+
+    // save the Q-table to a file
+    save(filePath: string){
+        const tableString = JSON.stringify(Array.from(this.table.entries()))
+        fs.writeFileSync(filePath, tableString)
+    }
+
+
+    // load the Q-table from a file
+    load(filePath: string){
+        const tableString = fs.readFileSync(filePath, 'utf8');
+        const tableArray: [string, [number, number][]][] = JSON.parse(tableString)
+        this.table = new Map(tableArray.map(([state,actions])=> [state, new Map(actions)]))
+    }
+
+}
