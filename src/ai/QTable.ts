@@ -93,16 +93,26 @@ export class QTable{
 
     // save the Q-table to a file
     save(filePath: string){
-        const tableString = JSON.stringify(Array.from(this.table.entries()))
-        fs.writeFileSync(filePath, tableString)
+        try {
+            const tableString = JSON.stringify(Array.from(this.table.entries()))
+            fs.writeFileSync(filePath, tableString)
+        } catch (error) {
+            console.log("Fail to save Q-Table: " , error)
+        }
     }
 
 
     // load the Q-table from a file
     load(filePath: string){
-        const tableString = fs.readFileSync(filePath, 'utf8');
-        const tableArray: [string, [number, number][]][] = JSON.parse(tableString)
-        this.table = new Map(tableArray.map(([state,actions])=> [state, new Map(actions)]))
+
+        try {
+            const tableString = fs.readFileSync(filePath, 'utf8');
+            const tableArray: [string, [number, number][]][] = JSON.parse(tableString)
+            this.table = new Map(tableArray.map(([state,actions])=> [state, new Map(actions)]))
+            console.log("Q-table loaded successfully\n")
+        } catch (error) {
+            console.log('Failed to load Q-Table: ' ,error )
+        }
     }
 
 }
