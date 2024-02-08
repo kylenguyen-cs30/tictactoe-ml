@@ -57,7 +57,7 @@ export class QTable{
             // update the Q-table with the new Q-value for the state-action pair
             this.table.get(state)?.set(action, newQValue)
 
-        }
+    }
 
     // Method to get the best action for a given state
     // the data which this getBestAction() function is getting from pre-train session
@@ -100,3 +100,53 @@ export class QTable{
     }
 
 }
+
+
+//--------------------------------------------------------------------------------
+/*
+
+	// update the Q-Table
+	updateQTable(
+		state: string,
+		action: number,
+		reward: number,
+		nextState: string
+	) {
+		if (typeof action !== 'number') {
+			console.error('Invalid action',action)
+			return
+		}
+		// debug
+		console.log("state: ", state)
+		console.log("action: ", action)
+		console.log("reward: ", reward)
+		console.log("nextState: ", nextState)
+		// Initialize Q-value for the current state-action pair if not already
+		if (!this.qTable.has(state)) {
+			this.qTable.set(state, new Map())
+		}
+		if (!this.qTable.get(state)?.has(action.toString())) {
+			this.qTable.get(state)?.set(action.toString(), 0)
+		}
+
+		// Get current Q-value for the state-action pair
+		const currentQValue = this.qTable.get(state)?.get(action.toString()) || 0
+
+		// Calculate the maximum Q-Value for the next state
+		let maxNextQValue = 0
+		const nextStateValue = this.qTable.get(nextState)
+		if (nextStateValue) {
+			maxNextQValue = Math.max(...Array.from(nextStateValue.values()))
+		}
+
+		// Calculate the new Q-Value using the Q-learning formula
+		const newQValue =
+			currentQValue +
+			this.learningRate *
+				(reward + this.discountFactor * maxNextQValue - currentQValue)
+
+		// Update the Q-Table with the new Q-value
+		this.qTable.get(state)?.set(action.toString(), newQValue)
+ 	}
+
+    */
