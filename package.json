@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"format": "prettier --write .",
-		"test": "jest"
+		"test": "jest",
+		"train": "ts-node src/ai/trainAgent.ts"
 	},
 	"dependencies": {
 		"next": "14.0.4",

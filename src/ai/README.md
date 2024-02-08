@@ -11,7 +11,7 @@ can understand. this could be a simple string or numerical representation of the
 - Reward : Define the reward structure. Commonly, wins could have a positive reward, losses a negative reward,
 
 
-# DOCUMENTATION: 
+# DOCUMENTATION RLAgent() : 
 
 1. constructor(): 
 
@@ -164,3 +164,18 @@ private takeAction(state: string, action: number): {nextState: string, reward: n
 - input: `state`: the current game state, `action`: the action taken
 - output: `nextState`: the new game state, `reward`: the reward for the action
 - Functionality: this method takes the action and updates the game state. It is called at the end of each game.
+
+
+# DOCUMENTATION QTable.ts:
+
+## Application: 
+- This file contains implementation of a class QTable which is an important component for Reinforcement Learning Machine Learning. This component respondsbile for storing data after finishing training agent in this case game "tic tac toe" will also train with another ai in order for the AI to be better at planning and stategry. 
+
+## constructor(): 
+- initialize 'table' property as an empty table 
+'''
+constructor(){ this.table = new Map()} // create a new Map()
+'''
+
+## Method : update(state: string, action: number, reward: number, nextState: string, learningRate: number, discountFactor: number)
+- Implement the Q-learning update rule. This method is supposed to update the Q-Value 

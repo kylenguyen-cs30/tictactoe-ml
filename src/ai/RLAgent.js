@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var QTable_1 = require("./QTable");
 var RLAgent = /** @class */ (function () {
     function RLAgent(learningRate, discountFactor, epsilon) {
         if (learningRate === void 0) { learningRate = 0.1; }
@@ -7,7 +8,7 @@ var RLAgent = /** @class */ (function () {
         if (epsilon === void 0) { epsilon = 0.1; }
         // Initialize Q-Table
         // using a map to store state-action and their Q-Values
-        this.qTable = new Map();
+        this.qTable = new QTable_1.QTable();
         // Learning rate (alpha) - controls how much the Q-Value is updated
         this.learningRate = learningRate;
         // dicount factor (gamma) - importance of future reward
@@ -43,57 +44,7 @@ var RLAgent = /** @class */ (function () {
     };
     // helper method to choose the best action based on Q-values
     RLAgent.prototype.chooseBestAction = function (state) {
-        var _this = this;
-        var validActions = this.getValidActions(state);
-        var bestAction = validActions[Math.floor(Math.random() * validActions.length)];
-        var maxQValue = Number.NEGATIVE_INFINITY;
-        // check if the current state is in the Q-Table
-        if (this.qTable.has(state)) {
-            validActions.forEach(function (action) {
-                var _a;
-                // retrieve the Q-Value for the each action and update the best action if needed
-                var qValue = ((_a = _this.qTable.get(state)) === null || _a === void 0 ? void 0 : _a.get(action.toString())) || 0;
-                if (qValue > maxQValue) {
-                    maxQValue = qValue;
-                    bestAction = action;
-                }
-            });
-        }
-        return bestAction;
-    };
-    // update the Q-Table
-    RLAgent.prototype.updateQTable = function (state, action, reward, nextState) {
-        var _a, _b, _c, _d;
-        if (typeof action !== 'number') {
-            console.error('Invalid action', action);
-            return;
-        }
-        // debug
-        console.log("state: ", state);
-        console.log("action: ", action);
-        console.log("reward: ", reward);
-        console.log("nextState: ", nextState);
-        // Initialize Q-value for the current state-action pair if not already
-        if (!this.qTable.has(state)) {
-            this.qTable.set(state, new Map());
-        }
-        if (!((_a = this.qTable.get(state)) === null || _a === void 0 ? void 0 : _a.has(action.toString()))) {
-            (_b = this.qTable.get(state)) === null || _b === void 0 ? void 0 : _b.set(action.toString(), 0);
-        }
-        // Get current Q-value for the state-action pair
-        var currentQValue = ((_c = this.qTable.get(state)) === null || _c === void 0 ? void 0 : _c.get(action.toString())) || 0;
-        // Calculate the maximum Q-Value for the next state
-        var maxNextQValue = 0;
-        var nextStateValue = this.qTable.get(nextState);
-        if (nextStateValue) {
-            maxNextQValue = Math.max.apply(Math, Array.from(nextStateValue.values()));
-        }
-        // Calculate the new Q-Value using the Q-learning formula
-        var newQValue = currentQValue +
-            this.learningRate *
-                (reward + this.discountFactor * maxNextQValue - currentQValue);
-        // Update the Q-Table with the new Q-value
-        (_d = this.qTable.get(state)) === null || _d === void 0 ? void 0 : _d.set(action.toString(), newQValue);
+        return this.qTable.getBestAction(state);
     };
     // Train Agent Function
     // This funtion responsible for training the AI. 
@@ -104,7 +55,8 @@ var RLAgent = /** @class */ (function () {
             while (!loopDone) {
                 var action = this.chooseAction(state);
                 var _a = this.takeAction(state, action), nextState = _a.nextState, reward = _a.reward, done = _a.done;
-                this.updateQTable(state, action, reward, nextState);
+                //this.updateQTable(state, action, reward, nextState)
+                this.qTable.update(state, action, reward, nextState, this.learningRate, this.discountFactor);
                 state = nextState;
                 if (done) {
                     // log the episode's outcome
@@ -180,6 +132,10 @@ var RLAgent = /** @class */ (function () {
     };
     RLAgent.prototype.isBoardFull = function (state) {
         return !state.includes('-');
+    };
+    RLAgent.prototype.saveQTable = function (filePath) {
+        console.log("save the table to the system\n");
+        this.qTable.save(filePath);
     };
     return RLAgent;
 }());

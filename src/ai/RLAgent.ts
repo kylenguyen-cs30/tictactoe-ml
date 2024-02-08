@@ -1,7 +1,8 @@
-
+import next from 'next';
+import { QTable } from './QTable';
 
 class RLAgent {
-	private qTable: Map<string, Map<string, number>>
+	private qTable: QTable
 	private learningRate: number
 	private discountFactor: number
 	private epsilon: number
@@ -9,7 +10,7 @@ class RLAgent {
 	constructor(learningRate = 0.1, discountFactor = 0.9, epsilon = 0.1) {
 		// Initialize Q-Table
 		// using a map to store state-action and their Q-Values
-		this.qTable = new Map()
+		this.qTable = new QTable()
 		// Learning rate (alpha) - controls how much the Q-Value is updated
 		this.learningRate = learningRate
 		// dicount factor (gamma) - importance of future reward
@@ -48,70 +49,11 @@ class RLAgent {
 			.filter((index) => index !== -1)
 	}
 
+
+
 	// helper method to choose the best action based on Q-values
 	private chooseBestAction(state: string): number {
-		const validActions = this.getValidActions(state)
-		let bestAction =
-			validActions[Math.floor(Math.random() * validActions.length)]
-		let maxQValue = Number.NEGATIVE_INFINITY
-
-		// check if the current state is in the Q-Table
-		if (this.qTable.has(state)) {
-			validActions.forEach((action) => {
-				// retrieve the Q-Value for the each action and update the best action if needed
-				const qValue = this.qTable.get(state)?.get(action.toString()) || 0
-				if (qValue > maxQValue) {
-					maxQValue = qValue
-					bestAction = action
-				}
-			})
-		}
-
-		return bestAction
-	}
-
-	// update the Q-Table
-	updateQTable(
-		state: string,
-		action: number,
-		reward: number,
-		nextState: string
-	) {
-		if (typeof action !== 'number') {
-			console.error('Invalid action',action)
-			return
-		}
-		// debug
-		console.log("state: ", state)
-		console.log("action: ", action)
-		console.log("reward: ", reward)
-		console.log("nextState: ", nextState)
-		// Initialize Q-value for the current state-action pair if not already
-		if (!this.qTable.has(state)) {
-			this.qTable.set(state, new Map())
-		}
-		if (!this.qTable.get(state)?.has(action.toString())) {
-			this.qTable.get(state)?.set(action.toString(), 0)
-		}
-
-		// Get current Q-value for the state-action pair
-		const currentQValue = this.qTable.get(state)?.get(action.toString()) || 0
-
-		// Calculate the maximum Q-Value for the next state
-		let maxNextQValue = 0
-		const nextStateValue = this.qTable.get(nextState)
-		if (nextStateValue) {
-			maxNextQValue = Math.max(...Array.from(nextStateValue.values()))
-		}
-
-		// Calculate the new Q-Value using the Q-learning formula
-		const newQValue =
-			currentQValue +
-			this.learningRate *
-				(reward + this.discountFactor * maxNextQValue - currentQValue)
-
-		// Update the Q-Table with the new Q-value
-		this.qTable.get(state)?.set(action.toString(), newQValue)
+		return this.qTable.getBestAction(state)
 	}
 
 
@@ -125,7 +67,8 @@ class RLAgent {
 			while (!loopDone) {
 				const action = this.chooseAction(state)
 				const {nextState, reward, done} = this.takeAction(state,action)
-				this.updateQTable(state, action, reward, nextState)
+				//this.updateQTable(state, action, reward, nextState)
+				this.qTable.update(state,action,reward,nextState, this.learningRate, this.discountFactor);
 				state = nextState
 
 				if (done) {
@@ -211,6 +154,11 @@ class RLAgent {
 
 	private isBoardFull(state: string): boolean{
 		return !state.includes('-');
+	}
+
+	public saveQTable(filePath:string){
+		console.log("save the table to the system\n")
+		this.qTable.save(filePath)
 	}
 }
 
