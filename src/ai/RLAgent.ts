@@ -157,6 +157,7 @@ class RLAgent {
 	}
 
 	public saveQTable(filePath:string){
+		console.log("save the table to the system\n")
 		this.qTable.save(filePath)
 	}
 }

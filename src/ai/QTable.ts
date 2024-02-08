@@ -14,7 +14,8 @@ QTable.ts
     received for actions taken, the learning rate, and the discount factor for future rewards.
 */
 
-import fs, { stat } from 'fs';
+//import fs, { stat } from 'fs';
+import * as fs from 'fs';
 
 export class QTable{
     private table: Map<string, Map<number,number>>;
@@ -24,9 +25,8 @@ export class QTable{
     // Method to update the Q-Value for a given state and action
     /*
     Q(s,a)=Q(s,a) + α × (r + γ × maxa′Q(s′,a′)−Q(s,a))
-    
-
     */
+   
     update(
         state:string,
         action:number,
@@ -37,6 +37,12 @@ export class QTable{
         ){
             // Implementation of the Q-Learning update rule
             // similar to your updateQTable method in RLAgent.ts
+
+            console.log("state: " , state)
+            console.log("action: " , action)
+            console.log("reward: " , reward)
+            console.log("nextState: " , nextState)
+
 
             if (!this.table.has(state)) {
                 this.table.set(state,new Map())
