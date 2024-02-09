@@ -15,7 +15,7 @@ QTable.ts
 */
 
 //import fs, { stat } from 'fs';
-import * as fs from 'fs';
+//import * as fs from 'fs';
 
 export class QTable{
     private table: Map<string, Map<number,number>>;
@@ -91,31 +91,56 @@ export class QTable{
         return bestAction
     }
 
-    // save the Q-table to a file
-    save(filePath: string){
+    
+
+    //load data from client side
+    loadFromData(data: [string, [number, number][]][]): void{
+        
         try {
-            const tableString = JSON.stringify(Array.from(this.table.entries()))
-            fs.writeFileSync(filePath, tableString)
+            this.table.clear()
+            //const tableArray = data
+            //this.table = new Map(tableArray.map(([state, actions]) => [state, new Map(actions)]))
+            data.forEach(([state, actions]) =>{
+                this.table.set(state,new Map(actions))
+            });
+            console.log("Q-table loaded from data succesfully")
+            
         } catch (error) {
-            console.log("Fail to save Q-Table: " , error)
+            console.error("Fail to load Q-Table: ", error)
         }
     }
 
-
-    // load the Q-table from a file
-    load(filePath: string){
-
-        try {
-            const tableString = fs.readFileSync(filePath, 'utf8');
-            const tableArray: [string, [number, number][]][] = JSON.parse(tableString)
-            this.table = new Map(tableArray.map(([state,actions])=> [state, new Map(actions)]))
-            console.log("Q-table loaded successfully\n")
-        } catch (error) {
-            console.log('Failed to load Q-Table: ' ,error )
-        }
+    serialize(){
+        return Array.from(this.table.entries()).map(([state,actions]) =>{
+            return [state,Array.from(actions.entries())]
+        })
     }
-
 }
+
+ // load the Q-table from a file
+    // this one is only used in server-side
+    // load(filePath: string){
+
+    //     try {
+    //         const tableString = fs.readFileSync(filePath, 'utf8');
+    //         const tableArray: [string, [number, number][]][] = JSON.parse(tableString)
+    //         this.table = new Map(tableArray.map(([state,actions])=> [state, new Map(actions)]))
+    //         console.log("Q-table loaded successfully\n")
+    //     } catch (error) {
+    //         console.log('Failed to load Q-Table: ' ,error )
+    //     }
+    // }
+
+// save the Q-table to a file
+    // save(filePath: string){
+    //     try {
+    //         const tableString = JSON.stringify(Array.from(this.table.entries()))
+    //         fs.writeFileSync(filePath, tableString)
+    //         console.log("Save Q-Table Succesfully \n")
+    //     } catch (error) {
+    //         console.log("Fail to save Q-Table: " , error)
+    //     }
+    // }
 
 
 //--------------------------------------------------------------------------------

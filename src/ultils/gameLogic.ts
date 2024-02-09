@@ -1,8 +1,9 @@
-import Scoreboard from '../components/Scoreboard'
+//import Scoreboard from '../components/Scoreboard'
 import { Player } from '../components/PlayerEnum'
 import { ScoresType } from '../components/ScoresType'
 import RLAgent from '../ai/RLAgent'
-import React,{useState} from 'react'
+//import React,{useState} from 'react'
+import { error } from 'console'
 
 /**
  * Converts the game board into a string representation.
@@ -28,6 +29,7 @@ const rlAgent = new RLAgent()
 
 // initialize the game when use click "start new game" button
 export function initializeGame(): GameState {
+	console.log("Initialize game state \n")
 	return {
 		board: Array(9).fill(null), // initialize an empty board
 		currentPlayer: Player.X, // sets the starting player
@@ -47,6 +49,8 @@ export function initializeGame(): GameState {
  * If no winner and the board is not full, the function return "Null" indicating the game should continue
  *
  */
+
+
 export function makeMove(state: GameState, position: number): GameState {
 	// step 1 : check if the position is valid
 	// position is invalid or  cell is already taken
@@ -244,6 +248,10 @@ export function handlePlayerMove(position: number, gameState: GameState, setGame
 }
 
 export function convertBoardToString(board: (Player | null)[]): string{
+	if (!board) {
+		console.error("convertBoardToString was called with an undefined or null board",error)
+		return '';
+	}
 	return board.map(cell => {
 		switch (cell) {
 			case Player.X:

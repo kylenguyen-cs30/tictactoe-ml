@@ -1,6 +1,5 @@
 'use client'
-//import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
 	checkWinner,
 	initializeGame, 
@@ -14,6 +13,8 @@ import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
 import RLAgent from '../ai/RLAgent'
+import {homedir} from 'os';
+import path from 'path'
 
 const rlAgent = new RLAgent() 
 
@@ -22,9 +23,51 @@ export default function Home() {
 	const [gameState, setGameState] = useState(initializeGame())
 	const [gameStatus, setGameStatus] = useState<string | null>(null)
 
-	const triggerAIMove = () =>{
-		aiMakeMove(gameState,setGameState)
+	//api call saveTable 
+	const handleSaveQTable = () => {
+		const qTableData = rlAgent.getQTableData();
+		saveQTable(qTableData)
 	}
+
+	async function saveQTable(qTableData: any){
+		try {
+			const response = await fetch('/api/saveQTable',{
+				method: 'POST',
+				headers:{
+					'Content-Type' : 'application/json',
+				},
+				body: JSON.stringify(qTableData),
+			});
+			if (!response.ok) {
+				throw new Error("Network response was not ok")
+			}
+			const responseData = await response.json()
+			console.log(responseData.message)
+		} catch (error) {
+			console.error('Failed to save QTable: ', error)
+		}
+	}
+
+
+	
+	
+
+	useEffect(() =>{
+		console.log("Point 1\n")
+		fetch('/api/loadQTable')
+			.then((res) => res.json())
+			.then((data) =>{
+				rlAgent.loadData(data);
+				console.log("QTable loaded succesffuly")
+			})
+			.catch((error: any) => {
+				console.error("Fail to load QTable: ", error)
+			})
+	}, [])
+
+	// const triggerAIMove = () =>{
+	// 	aiMakeMove(gameState,setGameState)
+	// }
 
 
 	const handleCellClick = (position: number) =>{
@@ -56,6 +99,8 @@ export default function Home() {
 		setGameState(resetGame(gameState.scores))
 		setGameStatus(null)
 	};
+
+
 
 	//Function to handle button click
 	return (
@@ -104,3 +149,14 @@ export default function Home() {
         It includes headings, buttons, and other elements, styled using Tailwind CSS classes.
     Usage: This is where you define the actual content and structure of a specific page. It seems to be set up for a Tic-tac-toe game, with buttons for game squares and a button to start a new game.
 */
+
+
+// useEffect(() =>{
+	// 	const filePath = path.join(homedir(),"Developer/web/personal-project/tictactoe-ml/src/models/qtable.json" )
+	// 	rlAgent.loadQTable(filePath).then(() => {
+	// 		console.log("QTable loaded successfully.");
+	// 	}).catch((error: any) => {
+	// 		console.error("Failed to load QTable: ", error)
+	// 	});
+		
+	// },[]);

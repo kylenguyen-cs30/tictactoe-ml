@@ -1,5 +1,6 @@
 import next from 'next';
 import { QTable } from './QTable';
+//import saveHandler from '../api/saveQTable'
 
 class RLAgent {
 	private qTable: QTable
@@ -157,10 +158,31 @@ class RLAgent {
 	}
 
 	public saveQTable(filePath:string){
-		console.log("save the table to the system\n")
-		this.qTable.save(filePath)
+		console.log("Save the table to the system\n")
+		//this.qTable.save(filePath)
+		//saveHandler()
+	}
+
+	
+	// this one for client side 
+	loadData(data: any){
+		this.qTable.loadFromData(data)
+	}
+	getQTableData(){
+		return this.qTable.serialize();
 	}
 }
 
 
 export default RLAgent
+
+
+
+// this one for server side loading manchenic
+	// public loadQTable(filePath:string): Promise<void>{
+	// 	return new Promise((resolve, reject) =>{
+	// 		console.log("Loading Q-Table \n")
+	// 		this.qTable.load(filePath)
+	// 	});
+	// }
+	
