@@ -1,13 +1,14 @@
-import RLAgent from "./RLAgent";
-import {homedir} from 'os';
+/**
+ * Imports the RLAgent class, os module, path module, and fs module.
+ * Creates an instance of the RLAgent class.
+ * Calls the .train() method on the rlAgent instance to train the agent for 100,000 steps.
+ */
+
+
+import RLAgent from './RLAgent'
+import { homedir } from 'os'
 import path from 'path'
 import fs from 'fs'
 
-
-const rlAgent = new RLAgent();
-rlAgent.train(100000);
-
-//const filePath = path.join(homedir(),"Developer/web/personal-project/tictactoe-ml/src/models/qtable.json" )
-//const filePath = path.join(__dirname, "/src/model/qtable.json")
-
-//rlAgent.saveQTable(filePath)
+const rlAgent = new RLAgent()
+rlAgent.train(100000)

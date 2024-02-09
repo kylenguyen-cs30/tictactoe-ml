@@ -29,7 +29,15 @@ export default function Home() {
 		saveQTable(qTableData)
 	}
 
+
+	// saveQTable 
+	// this function save the q-table after training
+	// agent. 
+	//
+	// I need to firgure out away to call this function 
+	// after training the model. 
 	async function saveQTable(qTableData: any){
+		console.log("saveQTable page.tsx is called")
 		try {
 			const response = await fetch('/api/saveQTable',{
 				method: 'POST',
@@ -51,11 +59,22 @@ export default function Home() {
 
 	
 	
-
+	// loadQTable
+	// react component responsible for load data
+	// into the AI model. using api routing 
 	useEffect(() =>{
-		console.log("Point 1\n")
-		fetch('/api/loadQTable')
-			.then((res) => res.json())
+		console.log("data is being loaded\n")
+
+		fetch("/api/loadQTable")
+			.then(async (res) =>{
+				// check if the reponse is ok (status in the range from 200-299)
+				if(!res.ok){
+					// if not okay, throw an error including the status 
+					const text = await res.text();
+					throw new Error(`HTTP ERROR : ${res.status} - ${text}`);
+				}
+				return res.json();
+			})
 			.then((data) =>{
 				rlAgent.loadData(data);
 				console.log("QTable loaded succesffuly")
@@ -65,10 +84,7 @@ export default function Home() {
 			})
 	}, [])
 
-	// const triggerAIMove = () =>{
-	// 	aiMakeMove(gameState,setGameState)
-	// }
-
+	
 
 	const handleCellClick = (position: number) =>{
 		// human move 
@@ -84,7 +100,8 @@ export default function Home() {
 			const aiAction = rlAgent.chooseAction(convertBoardToString(newState.board))
 			newState = makeMove(newState, aiAction)
 			setGameState(newState)
-			console.log(aiAction)
+			console.log("AI Action: ",aiAction)
+			console.log("New State: ",newState)
 
 			// update game status based on ai move
 			winner = checkWinner(newState.board)
@@ -151,12 +168,4 @@ export default function Home() {
 */
 
 
-// useEffect(() =>{
-	// 	const filePath = path.join(homedir(),"Developer/web/personal-project/tictactoe-ml/src/models/qtable.json" )
-	// 	rlAgent.loadQTable(filePath).then(() => {
-	// 		console.log("QTable loaded successfully.");
-	// 	}).catch((error: any) => {
-	// 		console.error("Failed to load QTable: ", error)
-	// 	});
-		
-	// },[]);
+

@@ -1,6 +1,5 @@
 import next from 'next';
 import { QTable } from './QTable';
-//import saveHandler from '../api/saveQTable'
 
 class RLAgent {
 	private qTable: QTable
@@ -54,6 +53,7 @@ class RLAgent {
 
 	// helper method to choose the best action based on Q-values
 	private chooseBestAction(state: string): number {
+		console.log("chooseBestAction() RLAgent\n")
 		return this.qTable.getBestAction(state)
 	}
 
@@ -178,11 +178,4 @@ export default RLAgent
 
 
 
-// this one for server side loading manchenic
-	// public loadQTable(filePath:string): Promise<void>{
-	// 	return new Promise((resolve, reject) =>{
-	// 		console.log("Loading Q-Table \n")
-	// 		this.qTable.load(filePath)
-	// 	});
-	// }
-	
+

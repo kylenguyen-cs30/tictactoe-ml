@@ -29,7 +29,7 @@ const rlAgent = new RLAgent()
 
 // initialize the game when use click "start new game" button
 export function initializeGame(): GameState {
-	console.log("Initialize game state \n")
+	// console.log("Initialize game state \n")
 	return {
 		board: Array(9).fill(null), // initialize an empty board
 		currentPlayer: Player.X, // sets the starting player
@@ -248,10 +248,6 @@ export function handlePlayerMove(position: number, gameState: GameState, setGame
 }
 
 export function convertBoardToString(board: (Player | null)[]): string{
-	if (!board) {
-		console.error("convertBoardToString was called with an undefined or null board",error)
-		return '';
-	}
 	return board.map(cell => {
 		switch (cell) {
 			case Player.X:
