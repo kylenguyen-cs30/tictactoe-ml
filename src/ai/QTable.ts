@@ -15,7 +15,7 @@ QTable.ts
 */
 
 //import fs, { stat } from 'fs';
-import * as fs from 'fs';
+//import * as fs from 'fs';
 
 export class QTable {
 	private table: Map<string, Map<number, number>>
@@ -95,30 +95,48 @@ export class QTable {
 	}
 
 	//load data from client side
-	loadFromData(data: [string, [number, number][]][]): void {
-		//console.log("Data received from leading into Q-Table:", actions);
+	// loadFromData(data: [string, [number, number][]][]): void {
+	// 	//console.log("Data received from leading into Q-Table:", actions);
 
 	
 
-		try {
-			this.table.clear()
-			//const tableArray = data
-			//this.table = new Map(tableArray.map(([state, actions]) => [state, new Map(actions)]))
-			data.forEach(([state, actions]) => {
-				console.log(`Loading state: ${state}, Actions: `, actions)
-				// Ensure 'actions' is in the correct format
-				console.log(Array.isArray(actions), actions) // Should log true followed by the array of actions
-				try {
-					this.table.set(state, new Map(actions))
-				} catch (error) {
-					console.error('Error creating map for state ' + state + ': ', error)
-				}
-			})
-			console.log('Q-table loaded from data succesfully')
-		} catch (error) {
-			console.error('Fail to load Q-Table: ', error)
-		}
-	}
+	// 	try {
+	// 		this.table.clear()
+	// 		//const tableArray = data
+	// 		//this.table = new Map(tableArray.map(([state, actions]) => [state, new Map(actions)]))
+	// 		data.forEach(([state, actions]) => {
+	// 			console.log(`Loading state: ${state}, Actions: `, actions)
+	// 			// Ensure 'actions' is in the correct format
+	// 			console.log(Array.isArray(actions), actions) // Should log true followed by the array of actions
+	// 			try {
+	// 				this.table.set(state, new Map(actions))
+	// 			} catch (error) {
+	// 				console.error('Error creating map for state ' + state + ': ', error)
+	// 			}
+	// 		})
+	// 		console.log('Q-table loaded from data succesfully')
+	// 	} catch (error) {
+	// 		console.error('Fail to load Q-Table: ', error)
+	// 	}
+	// }
+
+    loadFromData(data: { [key: string]: { [action: number]: number } }): void {
+        try {
+            this.table.clear();
+            Object.entries(data).forEach(([state, actions]) => {
+                console.log(`Loading state: ${state}, Actions: `, actions);
+                const actionMap = new Map<number, number>();
+                Object.entries(actions).forEach(([action, qValue]) => {
+                    actionMap.set(Number(action), qValue);
+                });
+                this.table.set(state, actionMap);
+            });
+            console.log('Q-table loaded from data successfully');
+        } catch (error) {
+            console.error('Failed to load Q-Table: ', error);
+        }
+    }
+    
 
 	serialize() {
 		return Array.from(this.table.entries()).map(([state, actions]) => {
@@ -126,11 +144,16 @@ export class QTable {
 		})
 	}
 
-    //Server-Side Rendering save qtable
-    save(filePath:string){
-        const serializedQTable = JSON.stringify(Array.from(this.table.entries()))
-        fs.writeFileSync(filePath, serializedQTable, 'utf8');
-        console.log('Q-table saved to', filePath)
+
+    getQTableData(): any {
+        const tableObject: { [key: string]: { [key: number]: number } } = {};
+        this.table.forEach((actionsMap, state) => {
+            tableObject[state] = {};
+            actionsMap.forEach((qValue, action) => {
+                tableObject[state][action] = qValue;
+            });
+        });
+        return tableObject;
     }
 }
 
@@ -139,6 +162,14 @@ export class QTable {
 
 
 //--------------------------------------------------------------------------------
+    //Server-Side Rendering save qtable
+    // save(filePath:string){
+    //     const serializedQTable = JSON.stringify(Array.from(this.table.entries()))
+    //     fs.writeFileSync(filePath, serializedQTable, 'utf8');
+    //     console.log('Q-table saved to', filePath)
+    // }
+
+
 
 // load the Q-table from a file
 // this one is only used in server-side

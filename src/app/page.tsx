@@ -13,8 +13,8 @@ import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
 import RLAgent from '../ai/RLAgent'
-import {homedir} from 'os';
-import path from 'path'
+//import {homedir} from 'os';
+//import path from 'path'
 
 const rlAgent = new RLAgent() 
 
@@ -23,41 +23,7 @@ export default function Home() {
 	const [gameState, setGameState] = useState(initializeGame())
 	const [gameStatus, setGameStatus] = useState<string | null>(null)
 
-	//-----------------------------------------------------------------------
-	//api call saveTable 
-	// const handleSaveQTable = () => {
-	// 	const qTableData = rlAgent.getQTableData();
-	// 	saveQTable(qTableData)
-	// }
-
-
-	// saveQTable 
-	// this function save the q-table after training
-	// agent. 
-	//
-	// I need to firgure out away to call this function 
-	// after training the model. 
-	// async function saveQTable(qTableData: any){
-	// 	console.log("saveQTable page.tsx is called")
-	// 	try {
-	// 		const response = await fetch('/api/saveQTable',{
-	// 			method: 'POST',
-	// 			headers:{
-	// 				'Content-Type' : 'application/json',
-	// 			},
-	// 			body: JSON.stringify(qTableData),
-	// 		});
-	// 		if (!response.ok) {
-	// 			throw new Error("Network response was not ok")
-	// 		}
-	// 		const responseData = await response.json()
-	// 		console.log(responseData.message)
-	// 	} catch (error) {
-	// 		console.error('Failed to save QTable: ', error)
-	// 	}
-	// }
-	//-----------------------------------------------------------------------
-
+	
 	
 	
 	// loadQTable
@@ -77,6 +43,7 @@ export default function Home() {
 				return res.json();
 			})
 			.then((data) =>{
+				console.log("Loaded QTable data: ", data)
 				rlAgent.loadData(data);
 				console.log("QTable loaded succesffuly")
 			})
@@ -167,6 +134,42 @@ export default function Home() {
         It includes headings, buttons, and other elements, styled using Tailwind CSS classes.
     Usage: This is where you define the actual content and structure of a specific page. It seems to be set up for a Tic-tac-toe game, with buttons for game squares and a button to start a new game.
 */
+
+
+//-----------------------------------------------------------------------
+	//api call saveTable 
+	// const handleSaveQTable = () => {
+	// 	const qTableData = rlAgent.getQTableData();
+	// 	saveQTable(qTableData)
+	// }
+
+
+	// saveQTable 
+	// this function save the q-table after training
+	// agent. 
+	//
+	// I need to firgure out away to call this function 
+	// after training the model. 
+	// async function saveQTable(qTableData: any){
+	// 	console.log("saveQTable page.tsx is called")
+	// 	try {
+	// 		const response = await fetch('/api/saveQTable',{
+	// 			method: 'POST',
+	// 			headers:{
+	// 				'Content-Type' : 'application/json',
+	// 			},
+	// 			body: JSON.stringify(qTableData),
+	// 		});
+	// 		if (!response.ok) {
+	// 			throw new Error("Network response was not ok")
+	// 		}
+	// 		const responseData = await response.json()
+	// 		console.log(responseData.message)
+	// 	} catch (error) {
+	// 		console.error('Failed to save QTable: ', error)
+	// 	}
+	// }
+	//-----------------------------------------------------------------------
 
 
 

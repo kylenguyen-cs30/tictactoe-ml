@@ -16,7 +16,7 @@ async function trainAndSaveAgent(){
     rlAgent.train(10000)
 
     const qTableFilePath = path.join(__dirname, '../models/qtable.json');
-    rlAgent.save(qTableFilePath)
+   //rlAgent.save(qTableFilePath)
     
 }
 

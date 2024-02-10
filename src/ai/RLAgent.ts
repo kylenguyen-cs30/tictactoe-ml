@@ -1,7 +1,7 @@
 import next from 'next';
 import { QTable } from './QTable';
 
-class RLAgent {
+export default class RLAgent {
 	private qTable: QTable
 	private learningRate: number
 	private discountFactor: number
@@ -157,28 +157,34 @@ class RLAgent {
 		return !state.includes('-');
 	}
 
-	public saveQTable(filePath:string){
-		console.log("Save the table to the system\n")
-		//this.qTable.save(filePath)
-		//saveHandler()
-	}
+	// server-side rendering
+	// public saveQTable(filePath:string){
+	// 	console.log("Save the table to the system\n")
+	// 	//this.qTable.save(filePath)
+	// 	//saveHandler()
+	// }
 
 	
 	// this one for client side 
 	loadData(data: any){
 		this.qTable.loadFromData(data)
 	}
-	getQTableData(){
-		return this.qTable.serialize();
-	}
+	// Method to access serialized Q-table data from QTable instance
+    getSerializedQTableData(): any {
+        return this.qTable.getQTableData();
+    }
 
-	save(filePath: any){
-		this.qTable.save(filePath)	
-	}
+    saveQTable(filePath: string): void {
+        const qTableData = this.getSerializedQTableData();
+        // Assuming you have access to the file system here, e.g., via fs in a Node.js environment
+        // fs.writeFileSync(filePath, JSON.stringify(qTableData), 'utf8');
+    }
+
+	public getQTableData(): any{ return this.qTable.getQTableData()}
 }
 
 
-export default RLAgent
+//export default RLAgent
 
 
 
