@@ -10,5 +10,14 @@ import { homedir } from 'os'
 import path from 'path'
 import fs from 'fs'
 
-const rlAgent = new RLAgent()
-rlAgent.train(100000)
+async function trainAndSaveAgent(){
+    
+    const rlAgent = new RLAgent()
+    rlAgent.train(10000)
+
+    const qTableFilePath = path.join(__dirname, '../models/qtable.json');
+    rlAgent.save(qTableFilePath)
+    
+}
+
+trainAndSaveAgent().catch(console.error);

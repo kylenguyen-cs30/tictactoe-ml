@@ -23,11 +23,12 @@ export default function Home() {
 	const [gameState, setGameState] = useState(initializeGame())
 	const [gameStatus, setGameStatus] = useState<string | null>(null)
 
+	//-----------------------------------------------------------------------
 	//api call saveTable 
-	const handleSaveQTable = () => {
-		const qTableData = rlAgent.getQTableData();
-		saveQTable(qTableData)
-	}
+	// const handleSaveQTable = () => {
+	// 	const qTableData = rlAgent.getQTableData();
+	// 	saveQTable(qTableData)
+	// }
 
 
 	// saveQTable 
@@ -36,26 +37,26 @@ export default function Home() {
 	//
 	// I need to firgure out away to call this function 
 	// after training the model. 
-	async function saveQTable(qTableData: any){
-		console.log("saveQTable page.tsx is called")
-		try {
-			const response = await fetch('/api/saveQTable',{
-				method: 'POST',
-				headers:{
-					'Content-Type' : 'application/json',
-				},
-				body: JSON.stringify(qTableData),
-			});
-			if (!response.ok) {
-				throw new Error("Network response was not ok")
-			}
-			const responseData = await response.json()
-			console.log(responseData.message)
-		} catch (error) {
-			console.error('Failed to save QTable: ', error)
-		}
-	}
-
+	// async function saveQTable(qTableData: any){
+	// 	console.log("saveQTable page.tsx is called")
+	// 	try {
+	// 		const response = await fetch('/api/saveQTable',{
+	// 			method: 'POST',
+	// 			headers:{
+	// 				'Content-Type' : 'application/json',
+	// 			},
+	// 			body: JSON.stringify(qTableData),
+	// 		});
+	// 		if (!response.ok) {
+	// 			throw new Error("Network response was not ok")
+	// 		}
+	// 		const responseData = await response.json()
+	// 		console.log(responseData.message)
+	// 	} catch (error) {
+	// 		console.error('Failed to save QTable: ', error)
+	// 	}
+	// }
+	//-----------------------------------------------------------------------
 
 	
 	

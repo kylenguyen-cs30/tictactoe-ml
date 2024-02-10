@@ -171,6 +171,10 @@ class RLAgent {
 	getQTableData(){
 		return this.qTable.serialize();
 	}
+
+	save(filePath: any){
+		this.qTable.save(filePath)	
+	}
 }
 
 

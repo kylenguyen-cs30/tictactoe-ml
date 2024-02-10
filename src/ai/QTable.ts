@@ -15,7 +15,7 @@ QTable.ts
 */
 
 //import fs, { stat } from 'fs';
-//import * as fs from 'fs';
+import * as fs from 'fs';
 
 export class QTable {
 	private table: Map<string, Map<number, number>>
@@ -98,15 +98,7 @@ export class QTable {
 	loadFromData(data: [string, [number, number][]][]): void {
 		//console.log("Data received from leading into Q-Table:", actions);
 
-		// DEBUGGING : check if each pair can be used to construct a MAP without errors
-		// data.forEach(([state,actions]) => {
-		// 	console.log(`State : ${state}, Actions: `, actions);
-		// 	try{
-		// 		console.log(`Test Map for state ${state}: `, error)
-		// 	}catch(error){
-		// 		console.error(`Error creating map for state ${state}: `,error)
-		// 	}
-		// })
+	
 
 		try {
 			this.table.clear()
@@ -133,7 +125,20 @@ export class QTable {
 			return [state, Array.from(actions.entries())]
 		})
 	}
+
+    //Server-Side Rendering save qtable
+    save(filePath:string){
+        const serializedQTable = JSON.stringify(Array.from(this.table.entries()))
+        fs.writeFileSync(filePath, serializedQTable, 'utf8');
+        console.log('Q-table saved to', filePath)
+    }
 }
+
+
+
+
+
+//--------------------------------------------------------------------------------
 
 // load the Q-table from a file
 // this one is only used in server-side
