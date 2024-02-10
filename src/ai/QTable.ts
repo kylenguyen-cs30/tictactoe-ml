@@ -77,9 +77,12 @@ export class QTable {
 		// Check if the state exists in the table
 		const stateActions = this.table.get(state)
 
+		console.log("stateActions: ", stateActions)
 		// if there are no actions for this state, return -1
 		if (!stateActions || stateActions.size === 0) {
-			return -1
+			const validActions = this.getValidActions(state)
+			return validActions[Math.floor(Math.random() * validActions.length)]
+			//return -1
 		}
 
 		// Iterate over all actions to find the one with highest Q-Value
@@ -92,6 +95,17 @@ export class QTable {
 			}
 		}
 		return bestAction
+	}
+
+	getValidActions(state: string):number[]{
+		const validActions = []
+		for(let i = 0; i < state.length; i++){
+			if (state[i] === '-') {
+				validActions.push(i)
+			}
+		}
+		return validActions
+
 	}
 
     loadFromData(data: { [key: string]: { [action: number]: number } }): void {

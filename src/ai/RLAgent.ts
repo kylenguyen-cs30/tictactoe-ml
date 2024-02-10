@@ -24,12 +24,15 @@ export default class RLAgent {
 	// given a state, choose an action
 	// method to choose the next action
 	chooseAction(state: string): number {
+		console.log("Incoming state: ", state)
 		// Exploration: Choose a random action
 		if (Math.random() < this.epsilon) {
 			// Exploration: choose a random action
+			console.log("RANDOM")
 			return this.chooseRandomAction(state)
 		} else {
 			// Exploitation: choose the action with the highest Q-Value
+			console.log("BEST")
 			return this.chooseBestAction(state)
 		}
 	}

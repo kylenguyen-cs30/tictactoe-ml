@@ -5,7 +5,7 @@ const fs = require('fs')
 
 async function trainAndSaveAgent(){
     const rlAgent = new RLAgent()
-    await rlAgent.train(10000)
+    await rlAgent.train(8000000)
 
     console.log("Point 1")
 

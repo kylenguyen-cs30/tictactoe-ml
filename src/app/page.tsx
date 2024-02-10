@@ -13,8 +13,8 @@ import Board from '../components/Board'
 import GameControls from '../components/GameControls'
 import Scoreboard from '../components/Scoreboard'
 import RLAgent from '../ai/RLAgent'
-//import {homedir} from 'os';
-//import path from 'path'
+
+
 
 const rlAgent = new RLAgent() 
 
@@ -55,7 +55,9 @@ export default function Home() {
 	
 
 	const handleCellClick = (position: number) =>{
-		// human move 
+		// human move
+		console.log("gameState: ",gameState)
+		console.log("position: ",position) 
 		let newState = makeMove(gameState, position)
 		setGameState(newState)
 
