@@ -1,4 +1,4 @@
-//import Scoreboard from '../components/Scoreboard'
+
 import { Player } from '../components/PlayerEnum'
 import { ScoresType } from '../components/ScoresType'
 import RLAgent from '../ai/RLAgent'
@@ -202,6 +202,7 @@ export function aiMakeMove(gameState: GameState, setGameState:(newState:GameStat
     
 
 	const currentStateString = convertBoardToString(gameState.board)
+	console.log("currentStateString: ", currentStateString)
 	const aiAction = rlAgent.chooseAction(currentStateString)
 	let newState = applyActionToGameState(gameState, aiAction, Player.O)
 
@@ -225,6 +226,9 @@ export function applyActionToGameState(currentState: GameState, action: number, 
     // Logic to apply the move to the game state
     // This is a simplified example, adjust based on your actual game state structure
     let newState = { ...currentState };
+	console.log("applyActionToGameState")
+	console.log("action: ",action)
+	console.log("newState: ", newState)
     if (newState.board[action] === null) {
         newState.board[action] = player;
         // Additional logic to update game state based on the move

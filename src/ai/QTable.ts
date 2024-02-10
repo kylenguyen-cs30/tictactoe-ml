@@ -94,37 +94,11 @@ export class QTable {
 		return bestAction
 	}
 
-	//load data from client side
-	// loadFromData(data: [string, [number, number][]][]): void {
-	// 	//console.log("Data received from leading into Q-Table:", actions);
-
-	
-
-	// 	try {
-	// 		this.table.clear()
-	// 		//const tableArray = data
-	// 		//this.table = new Map(tableArray.map(([state, actions]) => [state, new Map(actions)]))
-	// 		data.forEach(([state, actions]) => {
-	// 			console.log(`Loading state: ${state}, Actions: `, actions)
-	// 			// Ensure 'actions' is in the correct format
-	// 			console.log(Array.isArray(actions), actions) // Should log true followed by the array of actions
-	// 			try {
-	// 				this.table.set(state, new Map(actions))
-	// 			} catch (error) {
-	// 				console.error('Error creating map for state ' + state + ': ', error)
-	// 			}
-	// 		})
-	// 		console.log('Q-table loaded from data succesfully')
-	// 	} catch (error) {
-	// 		console.error('Fail to load Q-Table: ', error)
-	// 	}
-	// }
-
     loadFromData(data: { [key: string]: { [action: number]: number } }): void {
         try {
             this.table.clear();
             Object.entries(data).forEach(([state, actions]) => {
-                console.log(`Loading state: ${state}, Actions: `, actions);
+                //console.log(`Loading state: ${state}, Actions: `, actions);
                 const actionMap = new Map<number, number>();
                 Object.entries(actions).forEach(([action, qValue]) => {
                     actionMap.set(Number(action), qValue);

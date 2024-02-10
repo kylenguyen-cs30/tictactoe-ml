@@ -53,7 +53,7 @@ export default class RLAgent {
 
 	// helper method to choose the best action based on Q-values
 	private chooseBestAction(state: string): number {
-		console.log("chooseBestAction() RLAgent\n")
+		//console.log("chooseBestAction() RLAgent\n")
 		return this.qTable.getBestAction(state)
 	}
 
@@ -157,13 +157,6 @@ export default class RLAgent {
 		return !state.includes('-');
 	}
 
-	// server-side rendering
-	// public saveQTable(filePath:string){
-	// 	console.log("Save the table to the system\n")
-	// 	//this.qTable.save(filePath)
-	// 	//saveHandler()
-	// }
-
 	
 	// this one for client side 
 	loadData(data: any){
@@ -174,11 +167,7 @@ export default class RLAgent {
         return this.qTable.getQTableData();
     }
 
-    saveQTable(filePath: string): void {
-        const qTableData = this.getSerializedQTableData();
-        // Assuming you have access to the file system here, e.g., via fs in a Node.js environment
-        // fs.writeFileSync(filePath, JSON.stringify(qTableData), 'utf8');
-    }
+    
 
 	public getQTableData(): any{ return this.qTable.getQTableData()}
 }
@@ -189,3 +178,15 @@ export default class RLAgent {
 
 
 
+// server-side rendering
+	// public saveQTable(filePath:string){
+	// 	console.log("Save the table to the system\n")
+	// 	//this.qTable.save(filePath)
+	// 	//saveHandler()
+	// }
+
+	// saveQTable(filePath: string): void {
+    //     const qTableData = this.getSerializedQTableData();
+    //     // Assuming you have access to the file system here, e.g., via fs in a Node.js environment
+    //     // fs.writeFileSync(filePath, JSON.stringify(qTableData), 'utf8');
+    // }
