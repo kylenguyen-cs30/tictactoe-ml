@@ -191,6 +191,14 @@ private takeAction(state: string, action: number): {nextState: string, reward: n
 - output: `nextState`: the new game state, `reward`: the reward for the action
 - Functionality: this method takes the action and updates the game state. It is called at the end of each game.
 
+## checkForDraw()
+'''
+private checkForDraw(state: string): boolean {
+		// check if there are no more empty cells and no win
+		return !state.includes('-') && !this.checkForWin(state)
+	}
+'''
+- 
 
 # DOCUMENTATION QTable.ts:
 
