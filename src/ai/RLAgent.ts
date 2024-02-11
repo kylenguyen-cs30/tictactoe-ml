@@ -176,20 +176,3 @@ export default class RLAgent {
 }
 
 
-//export default RLAgent
-
-
-
-
-// server-side rendering
-	// public saveQTable(filePath:string){
-	// 	console.log("Save the table to the system\n")
-	// 	//this.qTable.save(filePath)
-	// 	//saveHandler()
-	// }
-
-	// saveQTable(filePath: string): void {
-    //     const qTableData = this.getSerializedQTableData();
-    //     // Assuming you have access to the file system here, e.g., via fs in a Node.js environment
-    //     // fs.writeFileSync(filePath, JSON.stringify(qTableData), 'utf8');
-    // }
