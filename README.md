@@ -22,7 +22,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
 
-```bash git clone https://github.com/yourgithubusername/tictactoe-ml.git```
+```bash git clone https://github.com/kylenguyen-cs30/tictactoe-ml.git```
 
 ## Navigate to the project directory:
 
