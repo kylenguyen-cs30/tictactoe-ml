@@ -1,48 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tic Tac Toe ML
 
-## Getting Started
+A modern take on the classic game of Tic Tac Toe, integrating machine learning for an enhanced gaming experience. This project uses a Q-learning algorithm to train an AI, making it capable of playing Tic Tac Toe with a competitive edge. Built with Next.js and React, this game is a showcase of AI's potential in learning and mastering games.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI Opponent**: Play against a machine learning-based AI trained with Q-learning.
+- **Interactive UI**: A sleek, user-friendly interface built with React and styled with TailwindCSS for an engaging gameplay experience.
+- **API for Q-Table**: Includes an API endpoint to load the Q-Table, enabling dynamic updates to the AI's knowledge base.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js for the frontend and server-side logic.
+- React for building the user interface.
+- TailwindCSS for styling.
+- Reinforce-js for the reinforcement learning algorithm implementation.
+- TypeScript for type-safe code.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+To set up the project locally, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash git clone https://github.com/yourgithubusername/tictactoe-ml.git```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Navigate to the project directory:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+``` cd tictactoe-ml ```
+## Install dependencies:
+``` npm install ```
+## Start the development server:
+```npm run dev```
 
 
+- The application should now be running on http://localhost:3000.
 
-## Agenda
+## Usage
+- To play the game, simply navigate to the application URL in your browser. You'll be playing against the AI by default. Click on the grid to make your move. The AI will automatically make its move after you.
 
-Next Steps for Building Machine Learning AI for Tic Tac Toe
+# Training the AI
+To further train the AI, you can use the train script included in the package.json:
 
-Here's a proposed agenda to integrate a machine learning AI (specifically, a reinforcement learning agent) into your Tic Tac Toe project:
-1. Overlap action: 
-- prevent player accidentally clicking on any cell before ai make its move
-2. Refine AI:
-- AI still make bad decision.
+```npm run train```
+
+- This will initiate a training session for the AI, improving its gameplay over time by updating the Q-Table.
+
+# Contributing
+Contributions are welcome! If you have suggestions for improvements or bug fixes, please feel free to fork the repository and submit a pull request.
+
+# License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+
+
