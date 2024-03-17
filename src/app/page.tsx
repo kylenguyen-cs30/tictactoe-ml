@@ -67,8 +67,6 @@ export default function Home() {
 			)
 			newState = makeMove(newState, aiAction)
 			setGameState(newState)
-			console.log('AI Action: ', aiAction)
-			console.log('New State: ', newState)
 
 			// update game status based on ai move
 			winner = checkWinner(newState.board)
